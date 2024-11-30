@@ -1,10 +1,10 @@
 ___
 
-Job Magnet - Your Ultimate Job Portal Solution
+# Job Magnet - Your Ultimate Job Portal Solution
 
 Job Magnet is an innovative online job portal designed to connect job seekers and employers effortlessly. With a focus on usability, efficiency, and professional networking, Job Magnet streamlines the hiring process and empowers users to achieve their career goals.
 
-Key Highlights:
+# Key Highlights:
 
 For Job Seekers:
 
@@ -20,20 +20,22 @@ View applicant profiles, download resumes, and manage shortlists.
 Customize company profiles with logos and banners.
 Communicate with potential candidates via the integrated messaging feature.
 
-Additional Features:
+# Additional Features:
 
 Professional and user-friendly interface inspired by platforms like LinkedIn and WhatsApp.
 Responsive design for seamless access across devices.
 Dynamic slideshow banners and modern UI for better user engagement.
 A robust backend to support real-time interactions and secure data management.
 
-Technology Stack:
+# Technology Stack:
 
 Frontend: HTML, CSS, JavaScript (responsive design).
+
 Backend: Spring Boot, Java, REST APIs.
+
 Database: MySQL for efficient and secure data storage.
 
-Additional Tools:
+# Additional Tools:
 
 Resume uploads and file handling.
 
