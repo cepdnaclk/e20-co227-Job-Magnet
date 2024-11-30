@@ -21,8 +21,9 @@ This is a sample image, to show how to add images to your page. To learn more op
 
 ## Team
 -  E/20/062, Name, [email](mailto:name@email.com)
--  eNumber, Name, [email](mailto:name@email.com)
--  eNumber, Name, [email](mailto:name@email.com)
+-  E/20/121, Name, [email](mailto:name@email.com)
+-  E/20/259, Name, [email](mailto:name@email.com)
+-  E20/376, Name, [email](mailto:name@email.com)
 
 ## Table of Contents
 1. [Introduction](#introduction)
