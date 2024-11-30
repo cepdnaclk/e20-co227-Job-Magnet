@@ -40,7 +40,8 @@ Job Magnet is an innovative online job portal designed to connect job seekers an
 Job Magnet is a one-stop solution for job seekers and employers, offering a modern platform to simplify recruitment and career advancement. Explore the repository to learn more about its features and implementation!
 
 ## Other Sub Topics
-#### Key Highlights:
+
+Key Highlights:
 
 For Job Seekers:
 Create professional profiles with resumes and skill details.
