@@ -34,7 +34,8 @@ This is a sample image, to show how to add images to your page. To learn more op
 
 ## Introduction
 
- Job Magnet - Your Ultimate Job Portal Solution
+### Job Magnet - Your Ultimate Job Portal Solution
+
 Job Magnet is an innovative online job portal designed to connect job seekers and employers effortlessly. With a focus on usability, efficiency, and professional networking, Job Magnet streamlines the hiring process and empowers users to achieve their career goals.
 Job Magnet is a one-stop solution for job seekers and employers, offering a modern platform to simplify recruitment and career advancement. Explore the repository to learn more about its features and implementation!
 
