@@ -9,7 +9,7 @@ title:
 
 [comment]: # "This is the standard layout for the project, but you can clean this and use your own template"
 
-# Project Title
+JOB MAGNET
 
 ---
 
@@ -20,10 +20,10 @@ This is a sample image, to show how to add images to your page. To learn more op
  -->
 
 ## Team
--  E/20/062, Name, [email](mailto:name@email.com)
--  E/20/121, Name, [email](mailto:name@email.com)
--  E/20/259, Name, [email](mailto:name@email.com)
--  E20/376, Name, [email](mailto:name@email.com)
+-  E/20/062, K.S.Dhananji, [email](mailto:e20062@eng.pdn.ac.lk)
+-  E/20/121, H.P.M.S.Gunasinha, [email](mailto:e20121@eng.pdn.ac.lk)
+-  E/20/259, Munasinghe S.L., [email](mailto:e20259@eng.pdn.ac.lk)
+-  E20/376,R.M.M.Shyamantha, [email](mailto:e20376@eng.pdn.ac.lk)
 
 ## Table of Contents
 1. [Introduction](#introduction)
@@ -36,7 +36,9 @@ This is a sample image, to show how to add images to your page. To learn more op
 
  Job Magnet - Your Ultimate Job Portal Solution
 Job Magnet is an innovative online job portal designed to connect job seekers and employers effortlessly. With a focus on usability, efficiency, and professional networking, Job Magnet streamlines the hiring process and empowers users to achieve their career goals.
+Job Magnet is a one-stop solution for job seekers and employers, offering a modern platform to simplify recruitment and career advancement. Explore the repository to learn more about its features and implementation!
 
+## Other Sub Topics
 Key Highlights:
 
 For Job Seekers:
@@ -58,20 +60,18 @@ Dynamic slideshow banners and modern UI for better user engagement.
 A robust backend to support real-time interactions and secure data management.
 
 Technology Stack:
+
 Frontend: HTML, CSS, JavaScript (responsive design).
 Backend: Spring Boot, Java, REST APIs.
 Database: MySQL for efficient and secure data storage.
+
 Additional Tools: Resume uploads, file handling, and company branding tools.
-Job Magnet is a one-stop solution for job seekers and employers, offering a modern platform to simplify recruitment and career advancement. Explore the repository to learn more about its features and implementation!
 
-## Other Sub Topics
-
-.....
 
 ## Links
 
-- [Project Repository](https://github.com/cepdnaclk/{{ page.repository-name }}){:target="_blank"}
-- [Project Page](https://cepdnaclk.github.io/{{ page.repository-name}}){:target="_blank"}
+- [Project Repository](https://github.com/cepdnaclk/e20-co227-Job-Magnet){:target="_blank"}
+- [Project Page](https://cepdnaclk.github.io/e20-co227-Job-Magnet/){:target="_blank"}
 - [Department of Computer Engineering](http://www.ce.pdn.ac.lk/)
 - [University of Peradeniya](https://eng.pdn.ac.lk/)
 
