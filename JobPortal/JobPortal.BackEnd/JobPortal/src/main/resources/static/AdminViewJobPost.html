@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Details</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        .header {
+            background-color: #0944f5f3;
+            color: white;
+            width: 1000px;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 36px;
+            margin: 0;
+        }
+
+        .header p {
+            margin-top: 10px;
+            font-size: 20px;
+        }
+
+        .contact-btn {
+            margin-top: 20px;
+            background-color: #ff7f50;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            font-size: 18px;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        .contact-btn:hover {
+            background-color: #e06b3a;
+        }
+
+        .container {
+            width: 50%;
+            margin: 40px auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            border-bottom: 3px solid #2d8699;
+            padding-bottom: 10px;
+            color: #2d8699;
+            margin-bottom: 20px;
+        }
+
+        .job-detail {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .job-detail label {
+            font-weight: bold;
+            color: #333;
+            width: 30%;
+        }
+
+        .job-detail p {
+            width: 65%;
+            margin: 0;
+            color: #555;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .delete-btn {
+            display: inline-block;
+            background-color: #ea0a45;
+            color: white;
+            padding: 10px 30px;
+            text-decoration: none;
+            font-size: 18px;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        .delete-btn:active {
+            background-color: #ea0a45;
+        }
+        .footer a {
+            margin-left: 10px; /* Adds space between buttons */
+        }
+
+        .back-btn {
+            display: inline-block;
+            background-color: #007bff; /* Blue color */
+            color: white;
+            padding: 10px 30px;
+            text-decoration: none;
+            font-size: 18px;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        .back-btn:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+        }
+
+        .confirm-box {
+            display: flex;
+            flex-direction: column; /* Arrange buttons in a column */
+            align-items: center; /* Center horizontally */
+            justify-content: center; /* Center vertically */
+            position: fixed; /* Position fixed to the viewport */
+            top: 50%; /* Center vertically */
+            left: 50%; /* Center horizontally */
+            transform: translate(-50%, -50%); /* Shift to center */
+            display: none; /* Initially hidden */
+            text-align: center;
+            margin-top: 20px;
+            background-color: #f8d7da;
+            padding: 20px;
+            border: 1px solid #f5c2c7;
+            border-radius: 8px;
+            color: #ea0a45;
+            z-index: 1000; /* Ensure it's above other elements */
+        }
+
+
+        .confirm-box button {
+            background-color: #ea0a45;
+            color: white;
+            padding: 10px 30px;
+            font-size: 16px;
+            border: none;
+            border-radius: 4px;
+            margin: 10px;
+            cursor: pointer;
+        }
+
+        .confirm-box button:hover {
+            background-color: #ea0a45;
+        }
+
+        .confirm-box .back-btn {
+            background-color: #007bff;
+        }
+
+        .confirm-box .back-btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>Company : <span id="companyName">[companyName]</span></h1>
+</div>
+
+<!-- Job Details Container -->
+<div class="container">
+    <h2>Job Information</h2>
+
+    <div class="job-detail">
+        <label for="jobTitle">Job Title:</label>
+        <p id="jobTitle">[jobTitle]</p>
+    </div>
+
+    <div class="job-detail">
+        <label for="type">Type:</label>
+        <p id="type">[jobType]</p>
+    </div>
+
+    <div class="job-detail">
+        <label for="position">Position:</label>
+        <p id="position">[position]</p>
+    </div>
+
+    <div class="job-detail">
+        <label for="primarySkill">Primary Skill:</label>
+        <p id="primarySkill">[primarySkill]</p>
+    </div>
+
+    <div class="job-detail">
+        <label for="secondarySkill">Secondary Skill:</label>
+        <p id="secondarySkill">[secondarySkill]</p>
+    </div>
+
+    <div class="job-detail">
+        <label for="otherSkills">Other Skills:</label>
+        <p id="otherSkills">[otherSkills]</p>
+    </div>
+
+    <div class="job-detail">
+        <label for="location">Location:</label>
+        <p id="location">[location]</p>
+    </div>
+
+    <div class="job-detail">
+        <label for="experience">Experience Required:</label>
+        <p id="experience">[experience]</p>
+    </div>
+
+    <div class="job-detail">
+        <label for="salary">Salary:</label>
+        <p id="salary">[salary]</p>
+    </div>
+
+    <div class="job-detail">
+        <label for="responsibilities">Responsibilities:</label>
+        <p id="responsibilities">[responsibilities]</p>
+    </div>
+
+    <div class="job-detail">
+        <label for="description">Description:</label>
+        <p id="description">[other]</p>
+    </div>
+
+    <div class="job-detail">
+        <label for="other">Other:</label>
+        <p id="other">[other]</p>
+    </div>
+    <!-- Add more job details as needed -->
+
+    <div class="footer">
+        <a href="#" class="delete-btn" onclick="showDeleteConfirmation()">Delete Job Posting</a>
+        <a href="AdminViewJobListings.html" class="back-btn">Back</a>
+
+    </div>
+
+    <!-- Confirmation box -->
+    <div class="confirm-box" id="confirmBox">
+        <p>Are you sure you want to delete this job seeker?</p>
+        <button class="delete-btn" onclick="confirmDelete()">Delete</button>
+        <button class="back-btn" onclick="goBack()">Close</button>
+    </div>
+</div>
+
+<script>
+    var job_id;
+
+    async function fetchJobDetails() {
+        try {
+            const params = new URLSearchParams(window.location.search);
+            const jobId = params.get('jobId');
+            console.log('Job ID from URL:', jobId);
+
+            job_id = jobId;
+
+            const response = await fetch(`/api/seekers/search-jobs/findByJobId/${jobId}`);
+            const data = await response.json();
+
+            // Dynamically update the HTML elements with the fetched data
+            document.getElementById('jobTitle').textContent = data.jobTitle;
+            document.getElementById('type').textContent = data.jobType;
+            document.getElementById('position').textContent = data.jobPosition;
+            document.getElementById('primarySkill').textContent = data.primaryskill;
+            document.getElementById('secondarySkill').textContent = data.secondaryskill;
+            document.getElementById('otherSkills').textContent = data.otherskills;
+            document.getElementById('location').textContent = data.location;
+            document.getElementById('experience').textContent = data.experiencerequired;
+            document.getElementById('salary').textContent = data.salary;
+            document.getElementById('responsibilities').textContent = data.responsibilities;
+            document.getElementById('description').textContent = data.description;
+            document.getElementById('other').textContent = data.other;
+            // Add more updates for the other job details here
+
+            const companyId = data.companyId;
+            const companyResponse = await fetch(`/api/employers/findbyid/${companyId}`);
+            const companyData = await companyResponse.json();
+            document.getElementById('companyName').textContent = companyData.companyName;
+
+        } catch (error) {
+            console.error('Error fetching job details:', error);
+        }
+    }
+
+    function showDeleteConfirmation() {
+        const deleteBtn = document.querySelector('.delete-btn');
+        deleteBtn.style.backgroundColor = '#7a071e'; // Darken the delete button
+        document.getElementById('confirmBox').style.display = 'block'; // Show confirmation box
+    }
+
+    function confirmDelete() {
+        if (!job_id) {
+            console.error('Job posting ID is undefined.');
+            return;
+        }
+
+        fetch(`/api/company/posting/delete/${job_id}`, {
+            method: 'DELETE'
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Job deleted successfully.');
+                    window.location.href = 'AdminViewJobListings.html'; // Redirect to admin view
+                } else {
+                    alert('Error deleting job: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error deleting job seeker:', error);
+            });
+    }
+
+    function goBack() {
+        document.getElementById('confirmBox').style.display = 'none'; // Hide the confirmation box
+    }
+
+
+
+    window.onload = fetchJobDetails;
+</script>
+
+</body>
+
+</html>

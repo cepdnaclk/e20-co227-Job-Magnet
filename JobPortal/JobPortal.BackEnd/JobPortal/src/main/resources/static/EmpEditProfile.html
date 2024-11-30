@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:Phone="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Edit Company Profile</title>
+    <style>
+        /* Basic Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #c3bcbc;
+            color: #181819;
+        }
+
+        .logo {
+            height: 50px; /* Adjust height as needed */
+            width: auto; /* Maintain aspect ratio */
+        }
+
+        /* Navigation Bar */
+        /* Header Styles */
+        header {
+            position: static;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 10px 20px;
+            text-align: left;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2em;
+            font-weight: bold;
+        }
+
+        header nav {
+            margin: 0;
+        }
+
+        header nav a {
+            color: white;
+            margin: 0 15px;
+            text-decoration: none;
+            font-size: 1.2em;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        header nav a:hover {
+            color: #007bff;
+        }
+
+        header nav a::after {
+            content: '';
+            position: absolute;
+            width: 0%;
+            height: 2px;
+            bottom: -5px;
+            left: 50%;
+            background-color: #007bff;
+            transition: all 0.3s ease-in-out;
+        }
+
+        header nav a:hover::after {
+            width: 100%;
+            left: 0;
+        }
+
+
+
+        .container {
+            padding: 20px;
+            background-color: #f8f8f8;
+        }
+
+        h1, h2 {
+            margin: 0;
+        }
+
+        h2 {
+            margin-top: 20px;
+        }
+
+        label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        input[type="file"] {
+            margin-bottom: 10px;
+        }
+
+        button {
+            background-color: #212388;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #1100ff;
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #333;
+            color: white;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+
+        /* Style for degree inside job-title-cover */
+        .job-title-cover small {
+            display: block;
+            font-size: 0.85em;
+            color: #201f1f;
+            margin-top: 5px;
+        }
+
+        /* Style for messages icon */
+        .messages-link {
+
+            position: relative;
+            display: inline-block;
+        }
+
+        .messages-icon {
+            padding-top: 5px;
+            height: 25px; /* Adjust the icon size */
+            width: auto;
+        }
+
+        .unread-count {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background-color: #ff0000; /* Red background for the unread count */
+            color: white;
+            border-radius: 50%;
+            padding: 5px 10px;
+            font-size: 0.9em;
+            display: none; /* Initially hidden */
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <a href="/">
+        <img src="images/logo.png" alt="Jobmagnet Logo" class="logo">
+    </a>
+    <nav>
+        <a href="/EmpHomeLogged.html">HOME</a>
+        <a href="/EmpviewProfile.html">PROFILE</a>
+        <a href="/applicants.html">APPLICANTS</a>
+        <a href="/PostJob.html">POST A JOB</a>
+        <a href="/PostedJobs.html">POSTED JOBS</a>
+        <a href="/seeker/seekerUnreadMessages.html" class="messages-link">
+            <img src="images/message.png" alt="Messages" class="messages-icon">
+            <span id="unreadCount" class="unread-count"></span>
+        </a>
+    </nav>
+</header>
+
+<div class="container">
+    <h1>Edit Profile</h1>
+    <form id="profileForm">
+        <label for="companyName">Company Name:</label>
+        <input type="text" id="companyName" name="companyName" required>
+
+        <label for="email">Email:</label>
+        <input type="text" id="email" name="email" required>
+
+        <label for="address">Address:</label>
+        <input type="text" id="address" name="address" required>
+
+        <label for="govRegNo">Gov Registration No:</label>
+        <input type="text" id="govRegNo" name="govRegNo">
+
+        <label for="about">About:</label>
+        <textarea id="about" name="about" rows="4"></textarea>
+
+        <label for="coreValues">Core Values:</label>
+        <textarea id="coreValues" name="coreValues" rows="4"></textarea>
+
+        <label for="years">Years in Business:</label>
+        <input type="text" id="years" name="years">
+
+        <label for="noOfEmployees">No of Employees:</label>
+        <input type="text" id="noOfEmployees" name="noOfEmployees">
+
+        <label for="projectsCompleted">Projects Completed:</label>
+        <input type="text" id="projectsCompleted" name="projectsCompleted">
+
+        <label for="companyLogoUpload">Upload Company Logo:</label>
+        <input type="file" id="companyLogoUpload" name="companyLogoUpload" accept="image/*">
+
+        <label for="bannerImageUpload">Upload Banner Image:</label>
+        <input type="file" id="bannerImageUpload" name="bannerImageUpload" accept="image/*">
+
+        <button type="submit">Update Profile</button>
+    </form>
+</div>
+
+<footer>
+    <p>&copy; 2024 Job Magnet. All rights reserved.</p>
+</footer>
+
+<script>
+    document.addEventListener('DOMContentLoaded', async () => {
+        const recipientEmail = localStorage.getItem('email');
+        if (recipientEmail) {
+            try {
+                const response = await fetch(`/api/messages/unread/${recipientEmail}`);
+                const unreadMessages = await response.json();
+
+                const unreadCount = unreadMessages.length;
+                const unreadCountElement = document.getElementById('unreadCount');
+
+                if (unreadCount > 0) {
+                    unreadCountElement.textContent = unreadCount;
+                    unreadCountElement.style.display = 'inline-block'; // Show the unread count if there are unread messages
+                } else {
+                    unreadCountElement.style.display = 'none'; // Hide if no unread messages
+                }
+            } catch (err) {
+                console.error('Error fetching unread messages:', err);
+            }
+        }
+    });
+
+    function fetchEmpProfile() {
+        const email = localStorage.getItem('email');
+        if (!email) {
+            alert('User not logged in');
+            window.location.href = '/login.html'; // Redirect to login page if not logged in
+            return;
+        }
+
+        fetch(`/api/employers/profile?email=${encodeURIComponent(email)}`)
+            .then(response => {
+                if (!response.ok) {
+                    if (response.status === 404) {
+                        alert("No profile found for this email");
+                    } else {
+                        alert("An error occurred while fetching the profile");
+                    }
+                    throw new Error('No profile found');
+                }
+                return response.json();
+            })
+            .then(data => {
+                document.getElementById('companyName').value = data.companyName;
+                document.getElementById('email').value = data.email;
+                document.getElementById('address').value = data.address;
+                document.getElementById('govRegNo').value = data.govRegNo;
+                document.getElementById('about').value = data.about;
+                document.getElementById('coreValues').value = data.coreValues;
+                document.getElementById('years').value = data.years;
+                document.getElementById('noOfEmployees').value = data.no_of_Employees;
+                document.getElementById('projectsCompleted').value = data.projectsCompleted;
+
+                // Convert base64-encoded images to display
+                if (data.bannerImage) {
+                    document.getElementById('bannerImage').src = 'data:image/png;base64,' + data.bannerImage;
+                }
+                if (data.companyLogo) {
+                    document.getElementById('companyLogo').src = 'data:image/jpeg;base64,' + data.companyLogo;
+                }
+            })
+            /*
+            .catch(error => {
+                console.error('Error fetching profile:', error);
+                alert('An error occurred while fetching the profile.');
+            });*/
+    }
+
+    document.getElementById('profileForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const formData = new FormData();
+        const email = document.getElementById('email').value;
+
+        formData.append('email', email);
+        formData.append('companyName', document.getElementById('companyName').value);
+        formData.append('companyLogo', document.getElementById('companyLogoUpload').files[0]);
+        formData.append('bannerImage', document.getElementById('bannerImageUpload').files[0]);
+        formData.append('govRegNo', document.getElementById('govRegNo').value);
+        formData.append('about', document.getElementById('about').value);
+        formData.append('coreValues', document.getElementById('coreValues').value);
+        formData.append('years', document.getElementById('years').value);
+        formData.append('noOfEmployees', document.getElementById('noOfEmployees').value);
+        formData.append('projectsCompleted', document.getElementById('projectsCompleted').value);
+
+        fetch('/api/employers/profile/update', {
+            method: 'PUT',
+            body: formData
+        })
+            .then(response => {
+                if (response.ok) {
+                    alert("Profile updated successfully!");
+                    window.location.href = '/EmpviewProfile.html'; // Redirect to profile view page
+                } else {
+                    alert("Failed to update profile.");
+                }
+            })
+            .catch(error => {
+                console.error('Error updating profile:', error);
+                alert('An error occurred while updating the profile.');
+            });
+    });
+
+    window.onload = fetchEmpProfile;
+</script>
+
+</body>
+</html>

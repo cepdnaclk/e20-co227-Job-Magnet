@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Post Jobs</title>
+    <link rel="stylesheet" href="jobpost.css">
+</head>
+<body>
+<h1>Page for Job Posting in Company 1</h1>
+<form action="/api/company/job-posting/post" method="POST">
+    <div class="job_details">
+
+        <!-- Display company ID but use a hidden input to actually submit it -->
+        <label for="display_company_id">Company ID</label><br>
+        <input type="text" id="display_company_id" name="display_company_id" value="1" disabled><br>
+
+        <!-- Hidden input field for company ID -->
+        <input type="hidden" id="company_id" name="companyId" value="1">
+
+        <label for="job_position">Job Position</label><br>
+        <input type="text" id="job_position" name="jobPosition"><br>
+
+        <label for="job_title">Job Title</label><br>
+        <input type="text" id="job_title" name="jobTitle"><br>
+
+        <label for="job_type">Job Type</label><br>
+        <input type="text" id="job_type" name="jobType"><br>
+
+        <label for="location">Location</label><br>
+        <input type="text" id="location" name="location"><br>
+
+        <label for="primary_skill">Primary Skill</label><br>
+        <input type="text" id="primary_skill" name="primaryskill"><br>
+
+        <label for="secondary_skill">Secondary Skill</label><br>
+        <input type="text" id="secondary_skill" name="secondaryskill"><br>
+
+        <label for="other_skills">Other Skills</label><br>
+        <input type="text" id="other_skills" name="otherskills"><br>
+
+        <label for="experience_required">Experience Required</label><br>
+        <input type="text" id="experience_required" name="experiencerequired"><br>
+
+        <label for="salary">Salary</label><br>
+        <input type="text" id="salary" name="salary"><br>
+
+        <label for="responsibilities">Responsibilities</label><br>
+        <input type="text" id="responsibilities" name="responsibilities"><br>
+
+        <label for="other">Other</label><br>
+        <input type="text" id="other" name="other"><br>
+    </div>
+    <input type="submit" value="Post Job">
+    <input type="reset" value="Reset">
+</form>
+</body>
+</html>

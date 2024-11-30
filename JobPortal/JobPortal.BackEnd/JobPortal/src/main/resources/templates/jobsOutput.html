@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Filtered Jobs</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ccc;
+            text-align: left;
+        }
+        th {
+            background-color: #f9f9f9;
+        }
+        .no-results {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<h1>Filtered Jobs</h1>
+<div class="container">
+    <h2>Job Results</h2>
+
+    <!-- Check if there are jobs to display -->
+    <div th:if="${#lists.isEmpty(jobs)}" class="no-results">
+        <p>No jobs found for the given criteria.</p>
+    </div>
+
+    <!-- Jobs Table -->
+    <table th:if="${!#lists.isEmpty(jobs)}">
+        <thead>
+        <tr>
+
+            <th scope="col">Title</th>
+            <th scope="col">Type</th>
+            <th scope="col">Description</th>
+            <th scope="col">Position</th>
+            <th scope="col">Primary Skill</th>
+            <th scope="col">Secondary Skill</th>
+            <th scope="col">Other Skills</th>
+            <th scope="col">Location</th>
+            <th scope="col">Experience Required</th>
+            <th scope="col">Salary</th>
+            <th scope="col">Responsibilities</th>
+            <th scope="col">Others</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="job : ${jobs}">
+            <td th:text="${job.jobTitle}"></td>
+            <td th:text="${job.jobType}"></td>
+            <td th:text="${job.jobType}"></td>
+            <td th:text="${job.jobPosition}"></td>
+            <td th:text="${job.primaryskill}"></td>
+            <td th:text="${job.secondaryskill}"></td>
+            <td th:text="${job.otherskills}"></td>
+            <td th:text="${job.location}"></td>
+            <td th:text="${job.experiencerequired}"></td>
+            <td th:text="${job.salary}"></td>
+            <td th:text="${job.responsibilities}"></td>
+            <td th:text="${job.other}"></td>
+
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

@@ -1,0 +1,317 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-image: url('images/loginback.jpg'); /* Replace with your image path */
+            background-size: cover; /* Ensures the image covers the entire background */
+            background-position: center; /* Centers the background image */
+            background-repeat: no-repeat; /* Prevents image from repeating */
+        }
+
+        .container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            display: flex;
+            max-width: 900px;
+            width: 90%;
+            overflow: hidden;
+        }
+
+        .company-logo {
+            position: absolute;
+            top: 10px;
+            left: 20px;
+        }
+        .company-logo img {
+            width: 200px; /* Adjust the size as needed */
+            height: auto;
+        }
+
+        .left-panel {
+            background: url('images/seekerreg.jpg') no-repeat center center; /* Replace with your image path */
+            background-size: cover; /* Ensures the image covers the entire background */
+            color: white;
+            padding: 40px;
+            width: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+
+        .left-panel h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .left-panel p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .right-panel {
+            background-color: white;
+            padding: 40px;
+            width: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        table {
+            width: 100%;
+        }
+
+        td {
+            padding: 10px 0;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        input[type="date"] {
+            width: 100%; /* Adjust width for show password text */
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 1em;
+            color: #333;
+            display: inline-block;
+            position: relative;
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="password"]:focus,
+        input[type="date"]:focus {
+            border-color: #2196F3;
+            outline: none;
+        }
+
+        .register {
+            width: 100%;
+            padding: 12px;
+            border-radius: 5px;
+            border: none;
+            background-color: #2196F3;
+            color: white;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .register:hover {
+            background-color: #1976D2;
+        }
+
+        p {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        p a {
+            color: #2196F3;
+            text-decoration: none;
+        }
+
+        p a:hover {
+            text-decoration: underline;
+        }
+
+        .show-password {
+            display: block;
+            margin-top: 5px;
+            font-size: 0.9em;
+            color: #2196F3;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .left-panel,
+            .right-panel {
+                width: 100%;
+                padding: 20px;
+            }
+
+            .right-panel {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="company-logo">
+    <img src="images/Logo.png" alt="Company Logo">
+</div>
+<div class="container">
+    <div class="left-panel">
+    </div>
+    <div class="right-panel">
+        <form id="registrationForm">
+            <table>
+                <tr>
+                    <td>First Name:</td>
+                    <td><input type="text" id="fname" name="fname" class="aa" required></td>
+                </tr>
+                <tr>
+                    <td>Last Name:</td>
+                    <td><input type="text" id="lname" name="lname" class="aa" required></td>
+                </tr>
+                <tr>
+                    <td>Date of Birth:</td>
+                    <td><input type="date" id="dob" name="dob" class="aa" required></td>
+                </tr>
+                <tr>
+                    <td>Enter Email:</td>
+                    <td><input type="email" id="email" name="email" class="aa" required></td>
+                </tr>
+                <tr>
+                    <td>Enter Password:</td>
+                    <td>
+                        <div style="position: relative;">
+                            <input type="password" id="password" name="password" class="aa" required>
+                            <span class="show-password" onclick="togglePassword('password')">Show Password</span>
+                        </div>
+                        <span id="strongPasswordError" style="color: red; display: none;">
+            Password must contain at least 8 characters, one uppercase letter, one lowercase letter, one number, and one special character!
+        </span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Confirm Password:</td>
+                    <td>
+                        <div style="position: relative;">
+                            <input type="password" id="password1" name="password1" class="aa" required>
+                            <span class="show-password" onclick="togglePassword('password1')">Show Password</span>
+                        </div>
+                        <span id="passwordError" style="color: red; display: none;">Passwords do not match!</span> <!-- Added error message -->
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="2">
+                        <ul>
+                            <li><input type="submit" value="Register" class="register"></li>
+                        </ul>
+                    </td>
+                </tr>
+            </table>
+        </form>
+        <p>Already Registered? <a href="Loginfin.html">Sign in</a></p>
+        <p>Employer? <a href="RegisterEmployerfin.html">Register</a></p>
+    </div>
+</div>
+
+<script>
+    function togglePassword(id) {
+        var passwordField = document.getElementById(id);
+        var showPasswordText = event.target;
+        if (passwordField.type === 'password') {
+            passwordField.type = 'text';
+            showPasswordText.textContent = 'Hide Password';
+        } else {
+            passwordField.type = 'password';
+            showPasswordText.textContent = 'Show Password';
+        }
+    }
+
+    function validatePassword(password) {
+        const minLength = 8;
+        const hasUpperCase = /[A-Z]/.test(password);
+        const hasLowerCase = /[a-z]/.test(password);
+        const hasNumber = /\d/.test(password);
+        const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+
+        return password.length >= minLength && hasUpperCase && hasLowerCase && hasNumber && hasSpecialChar;
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const today = new Date();
+        const maxDate = today.toISOString().split('T')[0]; // Convert to YYYY-MM-DD format
+        document.getElementById('dob').setAttribute('max', maxDate);
+    });
+
+    document.getElementById('registrationForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent the form from submitting the default way
+
+        const password = document.getElementById('password').value;
+        const password1 = document.getElementById('password1').value;
+        const passwordError = document.getElementById('passwordError');
+        const strongPasswordError = document.getElementById('strongPasswordError');
+
+
+        if (password !== password1) {
+            passwordError.style.display = 'block'; // Show error message
+            return; // Stop the form submission
+        } else {
+            passwordError.style.display = 'none'; // Hide error message if passwords match
+        }
+
+        if (!validatePassword(password)) {
+            strongPasswordError.style.display = 'block'; // Show error message for weak password
+            return; // Stop the form submission
+        } else {
+            strongPasswordError.style.display = 'none'; // Hide error message if password is strong
+        }
+
+        // Fetching form data
+        const formData = new FormData(this);
+        const data = {
+            fname: formData.get('fname'),
+            lname: formData.get('lname'),
+            dob: formData.get('dob'),
+            email: formData.get('email'),
+            password: formData.get('password'),
+        };
+        // Send data to server for registration
+        fetch('/api/jobseekers/registration', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+            .then(response => response.json())
+            .then(result => {
+                if (result.success) {
+                    alert('Registration successful!');
+                    window.location.href = '/Loginfin.html'; // Redirect to sign-in page
+                } else {
+                    alert('Registration failed. ' + result.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error registering:', error);
+                alert('An error occurred. Please try again.');
+            });
+    });
+
+</script>
+
+</body>
+</html>

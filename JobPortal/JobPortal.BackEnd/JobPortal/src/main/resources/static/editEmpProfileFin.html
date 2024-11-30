@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Employer Profile</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+            line-height: 1.6;
+        }
+        header {
+            width: 100%;
+            height: 250px;
+            background-image: url('https://via.placeholder.com/1200x250');
+            background-size: cover;
+            background-position: center;
+        }
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: -80px auto 20px;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            position: relative;
+        }
+        .company-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 20px;
+        }
+        .company-header h1 {
+            font-size: 28px;
+            color: #004080;
+        }
+        .company-header p {
+            font-size: 16px;
+            color: #777;
+        }
+        .company-logo {
+            position: absolute;
+            top: -50px;
+            left: 30px;
+        }
+        .company-logo img {
+            height: 100px;
+            width: 100px;
+            border-radius: 50%;
+            border: 5px solid white;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        form {
+            margin: 20px 0;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        form label {
+            font-weight: bold;
+        }
+        form input, form button ,textarea{
+            margin: 10px 0;
+            width: calc(100% - 22px);
+            padding: 10px;
+            font-size: 16px;
+        }
+        form button {
+            background-color: #004080;
+            color: white;
+            border: none;
+            cursor: pointer;
+            width: auto;
+        }
+        form button:hover {
+            background-color: #002850;
+        }
+        .company-details h2 {
+            color: #004080;
+            margin-bottom: 10px;
+        }
+        footer {
+            background-color: #004080;
+            color: white;
+            text-align: center;
+            padding: 15px 0;
+            margin-top: 40px;
+        }
+        footer p {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+
+<header></header>
+
+<div class="container">
+    <div class="company-logo">
+        <img src="#" alt="Company Logo">
+    </div>
+
+    <div class="company-header">
+        <div>
+
+            <h1 for="companyName1"></h1>
+            <h1>
+                <span id="companyName1"></span>
+            </h1>
+
+            <p>Leading the way in tech innovation and digital transformation.</p>
+
+        </div>
+    </div>
+
+    <div class="company-details">
+        <h2>Edit Profile</h2>
+        <form id="updateProfileForm">
+            <label for="companyName">Company Name</label>
+            <input type="text" name="companyName" id="companyName" placeholder="Company Name" required>
+
+            <label for="address">Company Address</label>
+            <input type="text" name="address" id="address" placeholder="Company Address" required>
+
+            <label for="govRegNo">Gov. Reg. No</label>
+            <input type="text" name="govRegNo" id="govRegNo" placeholder="Gov. Reg. No">
+
+            <label for="password">New Password</label>
+            <input type="password" name="password" id="password" placeholder="New Password">
+
+            <label for="about">About</label>
+            <textarea type="text" name="about" id="about" placeholder="About" ></textarea>
+
+            <label for="coreValues">Core Values</label>
+            <textarea type="text" name="coreValues" id="coreValues" placeholder="Core Values" ></textarea>
+
+            <label for="years">Years of Work</label>
+            <input type="number" name="years" id="years" placeholder="Years">
+
+            <label for="no_of_Employees">No of Employees</label>
+            <input type="number" name="no_of_Employees" id="no_of_Employees" placeholder="No of Employees">
+
+            <label for="projectsCompleted">Projects Completed</label>
+            <input type="number" name="projectsCompleted" id="projectsCompleted" placeholder="Projects Completed">
+
+            <button type="submit">Update Profile</button>
+        </form>
+    </div>
+</div>
+
+<footer>
+    <p>&copy; 2024 ABC Tech Solutions. All rights reserved.</p>
+</footer>
+
+<script>
+
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const email = localStorage.getItem('email');
+
+        fetch(`/api/employers/profile?email=${encodeURIComponent(email)}`)
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('companyName').value = data.companyName;
+                document.getElementById('address').value = data.address;
+                document.getElementById('govRegNo').value = data.govRegNo;
+                document.getElementById('years').value = data.years;
+                document.getElementById('no_of_Employees').value = data.no_of_Employees;
+                document.getElementById('projectsCompleted').value = data.projectsCompleted;
+                document.getElementById('about').value = data.about;
+                document.getElementById('coreValues').value = data.coreValues;
+                document.getElementById('companyName1').textContent = data.companyName;
+            })
+            .catch(error => console.error('Error fetching profile:', error));
+    });
+
+    document.getElementById('updateProfileForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const formData = new FormData(this);
+        const data = {
+            companyName: formData.get('companyName'),
+            address: formData.get('address'),
+            govRegNo: formData.get('govRegNo'),
+            password: formData.get('password'),
+            years: formData.get('years'),
+            no_of_Employees: formData.get('no_of_Employees'),
+            projectsCompleted: formData.get('projectsCompleted'),
+            about: formData.get('about'),
+            coreValues: formData.get('coreValues')
+        };
+        console.log("data to be sent :",data);
+        const email = localStorage.getItem('email');
+
+        fetch(`/api/employers/profile/update?email=${encodeURIComponent(email)}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+            .then(response => {
+                if (!response.ok) {
+                    return response.text().then(text => { throw new Error(text) });
+                }
+                return response.text();
+            })
+            .then(responseText => {
+                alert('Profile updated successfully!');
+                window.location.href = '/empprofilefin.html';
+            })
+            .catch(error => {
+                alert('An error occurred: ' + error.message);
+            });
+    });
+
+
+</script>
+
+</body>
+
+</html>

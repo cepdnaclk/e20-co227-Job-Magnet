@@ -1,0 +1,291 @@
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Form</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        html, body {
+            display: grid;
+            height: 100%;
+            width: 100%;
+            place-items: center;
+            background-image: url('images/loginback.jpg'); /* Replace with your image path */
+            background-size: cover; /* Ensures the image covers the entire background */
+            background-position: center; /* Centers the background image */
+            background-repeat: no-repeat; /* Prevents image from repeating */
+        }
+        ::selection {
+            background: #172b8c;
+            color: #fff;
+        }
+        /* Styling for the company logo in the top-left corner */
+        .company-logo {
+            position: absolute;
+            top: 10px;
+            left: 20px;
+        }
+        .company-logo img {
+            width: 200px; /* Adjust the size as needed */
+            height: auto;
+        }
+        .custom-hr {
+            border: none;
+            height: 2px;
+            background-color: #717174; /* Color of the horizontal line */
+            margin: 0 auto; /* Center the line */
+            width: 80%; /* Adjust the width of the line */
+            margin-top: 10px; /* Adjust spacing above the line */
+            margin-bottom: 20px; /* Adjust spacing below the line */
+        }
+
+
+        .wrapper {
+            width: 380px;
+            background: rgb(243, 244, 250);
+            border-radius: 15px;
+            box-shadow: 0px 15px 20px rgba(0, 0, 0, 1);
+            overflow: hidden;
+            position: relative;
+        }
+        .wrapper .title {
+            font-size: 35px;
+            font-weight: 600;
+            text-align: center;
+            line-height: 100px;
+            color: #151515;
+            user-select: none;
+            position: relative;
+            z-index: 1;
+        }
+        /* Curve effect with clip-path */
+        .wrapper .title::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            /* background: linear-gradient(100deg, rgb(0, 21, 255), #21CBF3);
+             clip-path: ellipse(80% 100% at 50% 0%);  Creates the curve effect */
+            z-index: -1;
+        }
+        .wrapper form {
+            padding: 1px 30px 50px 30px;
+        }
+        .wrapper form .field {
+            height: 50px;
+            width: 100%;
+            margin-top: 20px;
+            position: relative;
+        }
+        .wrapper form .field input {
+            height: 100%;
+            width: 100%;
+            outline: none;
+            font-size: 17px;
+            padding-left: 20px;
+            border: 1px solid lightgrey;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+        .wrapper form .field input:focus,
+        form .field input:valid {
+            border-color: #4158d0;
+        }
+        .wrapper form .field label {
+            position: absolute;
+            top: 50%;
+            left: 20px;
+            color: #999999;
+            font-weight: 400;
+            font-size: 17px;
+            pointer-events: none;
+            transform: translateY(-50%);
+            transition: all 0.3s ease;
+        }
+        form .field input:focus ~ label,
+        form .field input:valid ~ label {
+            top: 0%;
+            font-size: 16px;
+            color: #4158d0;
+            background: #fff;
+            transform: translateY(-50%);
+        }
+        form .content {
+            display: flex;
+            width: 100%;
+            height: 50px;
+            font-size: 16px;
+            align-items: center;
+            justify-content: space-around;
+        }
+        form .content .checkbox {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        form .content input {
+            width: 15px;
+            height: 15px;
+        }
+        form .content label {
+            color: #262626;
+            user-select: none;
+            padding-left: 5px;
+        }
+        form .field input[type="submit"] {
+            color: #fff;
+            border: none;
+            padding-left: 0;
+            margin-top: -10px;
+            font-size: 20px;
+            font-weight: 500;
+            cursor: pointer;
+            background: linear-gradient(-135deg, #6bc1e3, #092bd6);
+            transition: all 0.3s ease;
+        }
+        form .field input[type="submit"]:active {
+            transform: scale(0.95);
+        }
+        form .signup-link {
+            color: #262626;
+            margin-top: 20px;
+            text-align: center;
+        }
+        form .pass-link a,
+        form .signup-link a {
+            color: #4158d0;
+            text-decoration: none;
+        }
+        form .pass-link a:hover,
+        form .signup-link a:hover {
+            text-decoration: underline;
+        }
+
+
+
+    </style>
+</head>
+<body>
+<!-- Adding the company logo -->
+<div class="company-logo">
+    <img src="images/Logo.png" alt="Company Logo">
+</div>
+
+<div class="wrapper">
+    <div class="title">
+        Login
+    </div>
+    <hr class="custom-hr">
+    <form id="loginForm" action="#">
+        <div class="field">
+            <input type="text" name="email" required>
+            <label>Email Address</label>
+        </div>
+        <div id="password" class="field">
+            <input type="password" name="password" required>
+            <label>Password</label>
+        </div>
+
+        <!-- Horizontal radio buttons for role selection -->
+        <br>
+
+        <div class="field">
+            <input type="submit" value="Login">
+        </div>
+
+        <div class="content">
+
+            <div class="pass-link">
+                <a href="/ResetPassword/ResetPassSendMail.html">Forgot password?</a>
+            </div>
+        </div>
+
+
+        <div class="signup-link">
+            Not a member? <a href="/RegisterSeekerfin.html">Signup now</a>
+        </div>
+    </form>
+</div>
+
+
+
+<script>
+    document.getElementById('loginForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent the form from submitting the default way
+
+        const formData = new FormData(this);
+        const data = {
+            email: formData.get('email'),
+            // usertype: formData.get('usertype'),
+            password: formData.get('password')
+        };
+
+        console.log("data to be sent",data);
+        //localStorage.setItem('usertype',data.usertype);
+        fetch('/api/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+
+            .then(response => response.json())
+            .then(data => {
+                console.log("data is",data);
+                console.log(data.status);
+
+                if (data.status) {
+                    console.log(data.email);
+                    alert('Login Successful!');
+                    localStorage.setItem('email', data.email); // Store user ID in local storage
+                    //  localStorage.setItem('usertype',data.usertype);
+
+                    var userType = data.usertype;
+
+                    console.log("user type from back end " ,userType);
+
+                    if (userType === 'seeker'){
+                        alert('Redirecting to seeker homepage');
+                        window.location.href = '/SeekerHomeLogged.html'; // Redirect to profile page
+                    }else if(userType==='employer'){
+                        alert('Redirecting to employer homepage');
+                        window.location.href = '/EmpHomeLogged.html'; // Redirect to profile page
+                    }else if(userType==='admin'){
+                        alert('Redirecting to admin homepage');
+                        window.location.href = '/AdminHome.html'
+                    }
+                    else {
+                        console.error('Unexpected userType value:',userType);
+                    }
+
+
+                } else {
+                    alert('Login Failed: ' + data.message);
+                }
+            })
+            .catch(error => {
+                alert('An error occurred: ' + error.message);
+            });
+
+
+    });
+
+
+
+</script>
+
+
+
+</body>
+</html>

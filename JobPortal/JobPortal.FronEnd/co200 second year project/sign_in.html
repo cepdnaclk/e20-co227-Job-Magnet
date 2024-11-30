@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<title>Sign in for JobMagnet</title>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <style>
+            h1{
+                font-family: verdana;
+                font-weight: bold;
+                background: linear-gradient(to left,
+                            violet,
+                            indigo,
+                            blue,
+                            green,
+                            yellow,
+                            orange,
+                            red);
+                            -webkit-background-clip: text;
+                    color: transparent;
+            }
+
+            form{
+                text-align:left;
+            }
+            input{
+              
+                margin: 10px;
+            }
+            body{
+                background-color: #f1f3f7;
+                
+                
+            }
+           
+            ul{
+                list-style-type: none;
+                overflow:hidden;
+                
+            }
+            
+            .sign_in{
+              
+              color: white;
+              text-align: center;
+              height: 30px;;
+              width: 100%;
+              text-decoration: none;
+              background-color: rgb(19, 52, 238);
+              border: none;
+              margin-left: -12%;
+              float: left;
+          }
+            a{
+                text-decoration: none;
+                font-family: Verdana;
+                color: blueviolet;
+            }
+
+    </style>
+</head>
+<body>
+    <h1>JobMagnet</h1>
+    
+    <form action="printDetails" method="post">
+        <table>
+            
+            <tr>
+                    <td>
+                        Enter email: 
+                    </td>
+                    <td>
+                        <input type="email" name="user_email">
+                    </td>  
+            </tr>  
+
+             <tr>
+                <td>
+                    Enter password: 
+                </td>
+                <td>
+                    <input type="password" name="user_password">
+                </td>
+             </tr> 
+
+               
+                <tr>
+                    <td colspan="2" >
+                        <ul>
+                            <li>
+                                
+                           <input type="submit" value="Sign in" class="sign_in" onclick="http://localhost:63342/EmplyeeSignIn.java/homepage_after_signin.html?_ijt=f58svnotdhev7qei23t82d6tpq">
+                        </li>
+                        </ul>
+                    </td>
+                    
+                </tr>
+        </table>
+
+    </form>
+    <p> 
+        New to JobMagnet? <a href="http://127.0.0.1:5500/register.html">Register</a>
+    </p>
+    
+</body>
+
+</html>

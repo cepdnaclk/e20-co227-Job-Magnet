@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Seeker Profile and Messaging</title>
+    <style>
+        /* Basic Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #c3bcbc;
+            color: #0f41e4;
+        }
+
+        .logo {
+            height: 50px; /* Adjust height as needed */
+            width: auto; /* Maintain aspect ratio */
+        }
+
+        /* Navigation Bar */
+        /* Header Styles */
+        header {
+            position: static;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 10px 20px;
+            text-align: left;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2em;
+            font-weight: bold;
+        }
+
+        header nav {
+            margin: 0;
+        }
+
+        header nav a {
+            color: white;
+            margin: 0 15px;
+            text-decoration: none;
+            font-size: 1.2em;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        header nav a:hover {
+            color: #007bff;
+        }
+
+        header nav a::after {
+            content: '';
+            position: absolute;
+            width: 0%;
+            height: 2px;
+            bottom: -5px;
+            left: 50%;
+            background-color: #007bff;
+            transition: all 0.3s ease-in-out;
+        }
+
+        header nav a:hover::after {
+            width: 100%;
+            left: 0;
+        }
+        .dropdown-content a {
+            color: white;
+            padding: 10px 12px;
+            text-decoration: none;
+            display: block;
+            text-align: left;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #007bff;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown:hover .dropbtn {
+            background-color: #007bff;
+        }
+
+        .dropbtn {
+            background-color: #333333;
+            color: white;
+            padding: 8px 15px;
+            font-size: 1.5em;
+            border: none;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+
+        /* Profile Card Container */
+        .profile-container {
+            width: 70%;
+            max-width: 1200px;
+            margin: 100px auto 20px; /* Adjusted margin to prevent overlap */
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            position: relative;
+            display: flex;
+            flex-direction: row;
+        }
+
+        /* Profile Card */
+
+        .left-profile {
+            display: flex;
+            flex-direction: column;
+            width: 30%;
+            background-color: #064588;
+            color: #fff;
+            padding: 15px;
+            border-radius: 10px 0 0 10px;
+            align-items: center;
+        }
+
+        .upper-section {
+            margin-bottom: 20px;
+            border-bottom: 2px solid #fff;
+            display: flex;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .profile-pic {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 4px solid #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .profile-pic img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .lower-section {
+            flex-grow: 1;
+            text-align: center;
+        }
+
+        .basic-info p {
+            margin: 8px 0;
+            font-size: 1em;
+        }
+
+        .basic-info p strong {
+            color: #fff;
+            font-size: 1.1em;
+        }
+
+        .right-profile {
+            width: 70%;
+            background-color: #f4f4f4;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            border-radius: 0 10px 10px 0;
+        }
+
+        .profile-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-gap: 15px;
+        }
+
+        .profile-info p {
+            margin-bottom: 5px;
+            font-size: 1em;
+            color: #555;
+        }
+
+        .profile-info p strong {
+            color: #333;
+            font-size: 1.1em;
+        }
+
+        .edit-profile-btn {
+            margin-top: 200px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            display: inline-block;
+            align-self: center;
+        }
+
+        .edit-profile-btn:hover {
+            background-color: #0056b3;
+        }
+
+        @media (max-width: 768px) {
+            .profile-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .left-profile, .right-profile {
+                width: 100%;
+            }
+
+            .profile-info {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        input, textarea, button {
+            padding: 10px;
+            margin-bottom: 10px;
+            width: 100%;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color:#0056b3;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #5187c3;
+        }
+
+        .message-section {
+            display: flex;
+            flex-direction: column;
+            height: 500px;
+            width: 100%;
+            background-color: #e5ddd5;
+            border-radius: 8px;
+        }
+
+        .conversation {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 10px;
+            background-color: #f7f7f7;
+            border-radius: 8px 8px 0 0;
+        }
+
+        .message {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 12px;
+            width: 60%;
+        }
+
+        .message.sender {
+            background-color: #a1c0ef;
+            margin-left: auto;
+            justify-content: flex-end;
+        }
+
+        .message.recipient {
+            background-color: #fff;
+        }
+
+        .message img {
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+        }
+
+        .message p {
+            margin: 0;
+            word-wrap: break-word;
+        }
+
+        .message-attachment {
+            margin-top: 5px;
+        }
+
+        .send-message-form {
+            display: flex;
+            padding: 10px;
+            background-color: #fff;
+            border-radius: 0 0 8px 8px;
+        }
+
+        .send-message-form input[type="file"] {
+            margin-left: 10px;
+        }
+
+        textarea {
+            flex-grow: 1;
+            margin-right: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .icon-button {
+            width: 5px; /* Adjust size as needed */
+            height: 5px; /* Adjust size as needed */
+            cursor: pointer;
+            margin-left: 10px; /* Space between icons */
+            transition: opacity 0.8s;
+        }
+
+        .icon-button:hover {
+            opacity: 0.9; /* Slightly fade on hover */
+        }
+
+        .conversation {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 10px;
+            background-color: #f7f7f7;
+            border-radius: 8px 8px 0 0;
+            max-height: 400px; /* Set a max height */
+        }
+
+        /* Custom scrollbar styling for WebKit browsers (Chrome, Safari) */
+        .conversation::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .conversation::-webkit-scrollbar-track {
+            background-color: #f1f1f1;
+        }
+
+        .conversation::-webkit-scrollbar-thumb {
+            background-color: #888;
+            border-radius: 4px;
+        }
+        .messaging-window {
+            display: none; /* Hidden by default */
+            position: fixed; /* Fixed positioning for floating window */
+            bottom: 20px; /* Distance from the bottom of the screen */
+            right: 20px; /* Distance from the right of the screen */
+            width: 400px; /* Default width */
+            height: 600px; /* Default height */
+            background-color: white; /* Background color */
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); /* Softer shadow */
+            border-radius: 12px; /* More pronounced rounded corners */
+            padding: 15px; /* Padding inside the window */
+            z-index: 1000; /* Ensure it stays on top */
+            overflow-y: hidden; /* Enable scrolling for overflow content */
+            transition: width 0.3s ease, height 0.3s ease; /* Smooth transition for resizing */
+        }
+
+        .messaging-window.open {
+            display: block;
+            opacity: 1;
+        }
+        @media only screen and (max-width: 600px) {
+            .messaging-window {
+                width: 90%; /* Responsive width for small screens */
+                height: 600px; /* Smaller height */
+                bottom: 10px; /* Adjust positioning */
+                right: 10px; /* Adjust positioning */
+            }
+        }
+        /* Allow resizing the message window */
+        .messaging-window {
+            resize: both; /* Let users resize the window */
+            max-width: 90%; /* Limit resizing width */
+            max-height: 80%; /* Limit resizing height */
+        }
+
+        .messaging-header {
+            font-size: 20px;
+            font-weight: bolder;
+            color: #1c1671;
+            text-decoration-color: #2d07d6;
+            text-align: left;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        .messaging-header h3 {
+            color: #004080;
+            margin: 0;
+        }
+        #conversation {
+            max-height: 400px; /* Set a max height for the conversation area */
+            overflow-y: auto; /* Enable vertical scrolling */
+            margin-bottom: 20px;
+        }
+        #closeMessageWindow {
+            height:40px;
+            width: 50px;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-left: auto;
+        }
+
+        .conversation::-webkit-scrollbar-thumb:hover {
+            background-color: #555;
+        }
+        .social-icons {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .social-icons a {
+            margin: 0 10px;
+            color: #004080;
+            font-size: 24px;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        .social-icons a:hover {
+            color: #002850;
+        }
+        footer {
+            background-color: #3e3838;
+            color: white;
+            text-align: center;
+            padding: 15px 0;
+            margin-top: 40px;
+        }
+        footer p {
+            margin: 0;
+        }
+        .delete-button {
+            width: 25px; /* Set a fixed width for the delete button */
+            height: 25px; /* Set a fixed height for the delete button */
+            margin-left: 10px; /* Space between icons */
+            cursor: pointer;
+            transition: opacity 0.8s;
+        }
+
+        .delete-button:hover {
+            opacity: 0.9; /* Slightly fade on hover */
+        }
+
+        /* Style for messages icon */
+        .messages-link {
+
+            position: relative;
+            display: inline-block;
+        }
+
+        .messages-icon {
+            padding-top: 5px;
+            height: 25px; /* Adjust the icon size */
+            width: auto;
+        }
+
+        .unread-count {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background-color: #ff0000; /* Red background for the unread count */
+            color: white;
+            border-radius: 50%;
+            padding: 5px 10px;
+            font-size: 0.6em;
+            display: none; /* Initially hidden */
+        }
+
+    </style>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+<header>
+    <a href="/">
+        <img src="images/logo.png" alt="Jobmagnet Logo" class="logo">
+    </a>
+    <nav>
+        <a href="/EmpHomeLogged.html">HOME</a>
+        <a href="/EmpviewProfile.html">PROFILE</a>
+        <a href="/applicants.html">APPLICANTS</a>
+        <a href="/PostJob.html">POST A JOB</a>
+        <a href="/PostedJobs.html">POSTED JOBS</a>
+        <a href="/EmployerUnreadMessages.html" class="messages-link">
+            <img src="images/message.png" alt="Messages" class="messages-icon">
+            <span id="unreadCount" class="unread-count"></span>
+        </a>
+    </nav>
+</header>
+<!-- Profile Section -->
+
+
+<div class="particle-container"></div>
+
+
+<!-- Profile Section -->
+<div class="profile-container">
+    <!-- Left part: Profile photo and basic details -->
+    <div class="left-profile">
+        <div class="upper-section">
+            <div class="profile-pic">
+                <img id="profilePicture" src="/images/manuja.jpg" alt="Profile Picture">
+            </div>
+        </div>
+        <div class="lower-section basic-info">
+            <p><strong>Full Name:</strong> <span id="fname"></span> <span id="lname"></span></p>
+            <p><strong>Email:</strong> <span id="email"></span></p>
+        </div>
+
+    </div>
+
+    <!-- Right part: Other profile information -->
+    <div class="right-profile">
+        <div class="profile-info">
+            <p><strong>Date of Birth:</strong> <span id="dob"></span></p>
+            <p><strong>Degree:</strong> <span id="degree"></span></p>
+            <p><strong>Experience:</strong> <span id="experience"></span></p>
+            <p><strong>Skills:</strong> <span id="skills"></span></p>
+            <p><strong>University:</strong> <span id="university"></span></p>
+            <p><strong>Degree Class:</strong> <span id="dclass"></span></p>
+            <p><strong>Projects:</strong> <span id="projects"></span></p>
+            <p><strong>Bio:</strong> <span id="bio"></span></p>
+            <p><strong>Phone:</strong> <span id="phone"></span></p>
+            <p><strong>About Me:</strong> <span id="about"></span></p>
+            <br>
+            <button id="messageButton">Message</button> <!-- Message button --></div>
+        <br>
+        <div class="social-icons">
+            <a href="#"><i class="fab fa-linkedin"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+        </div>
+        <br>
+    </div>
+
+
+    <div class="messaging-window" id="messageWindow">
+        <div class="messaging-header">
+            Messages   <img id="closeMessageWindow" src="/images/close.png" alt="Close" class="icon-button">
+        </div>
+        <div id="conversation"></div>
+
+        <form id="sendMessageForm" class="send-message">
+            <input type="text" id="content" placeholder="Type a message">
+            <input type="file" id="file" onchange="updateFileName()">
+            <div id="fileName" style="margin-top: 5px; color: #555;"></div> <!-- New div for file name -->
+            <button type="submit">Send</button>
+        </form>
+
+
+    </div>
+</div>
+<footer>
+    <p>&copy; 2024 Job Magnet. All rights reserved.</p>
+</footer>
+<script>
+    // Fetch unread messages outside the nested event listener
+    const recipientEmail = localStorage.getItem('email');
+    if (recipientEmail) {
+        fetchUnreadMessages(recipientEmail);
+    }
+
+
+    // Fetch unread messages function
+    async function fetchUnreadMessages(recipientEmail) {
+        try {
+            const response = await fetch(`/api/messages/unread/${recipientEmail}`);
+            const unreadMessages = await response.json();
+
+            const unreadCount = unreadMessages.length;
+            const unreadCountElement = document.getElementById('unreadCount');
+
+            if (unreadCount > 0) {
+                unreadCountElement.textContent = unreadCount;
+                unreadCountElement.style.display = 'inline-block'; // Show the unread count if there are unread messages
+            } else {
+                unreadCountElement.style.display = 'none'; // Hide if no unread messages
+            }
+        } catch (err) {
+            console.error('Error fetching unread messages:', err);
+        }
+    }
+
+    // Function to get URL parameters
+    function getUrlParameter(name) {
+        name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+        const regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+        const results = regex.exec(location.search);
+        return results === null ? null : decodeURIComponent(results[1].replace(/\+/g, ' '));
+    }
+
+    let jobSeekerProfilePic = '';
+
+    // Fetch Profile Data
+    function fetchProfile() {
+        const seekerId = getUrlParameter('id');
+        if (!seekerId) {
+            console.log('Seeker ID is missing');
+            return;
+        }
+
+        fetch(`/api/jobseekers/searchbyid/${encodeURIComponent(seekerId)}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok: ' + response.statusText);
+                }
+                return response.json();
+            })
+            .then(data => {
+                document.getElementById('fname').textContent = data.fname;
+                document.getElementById('lname').textContent = data.lname;
+                document.getElementById('email').textContent = data.email;
+                document.getElementById('dob').textContent = data.dob;
+                document.getElementById('skills').textContent = data.skills;
+                document.getElementById('experience').textContent = data.experience;
+                document.getElementById('bio').textContent = data.bio;
+                document.getElementById('phone').textContent = data.phone;
+                document.getElementById('university').textContent = data.university;
+                document.getElementById('degree').textContent = data.degree;
+                document.getElementById('dclass').textContent = data.dclass;
+                document.getElementById('projects').textContent = data.projects;
+                document.getElementById('about').textContent = data.about;
+
+                // Profile picture
+                if (data.profilePicture) {
+                    jobSeekerProfilePic = `data:image/png;base64,${data.profilePicture}`;
+                    document.getElementById('profilePicture').src = jobSeekerProfilePic;
+                }
+
+                fetchConversation(data.email);
+            })
+            .catch(error => {
+                console.error('Error fetching profile:', error);
+            });
+    }
+
+
+    // Fetch Previous Conversation
+    function fetchConversation(recipientEmail) {
+        const senderEmail = localStorage.getItem('email');
+        if (!senderEmail) {
+            console.error('Sender email not found in localStorage');
+            return;
+        }
+
+        fetch(`/api/messages/conversation/${encodeURIComponent(senderEmail)}/${encodeURIComponent(recipientEmail)}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok: ' + response.statusText);
+                }
+                return response.json();
+            })
+            .then(messages => {
+                const conversationDiv = document.getElementById('conversation');
+                conversationDiv.innerHTML = '';
+
+                if (messages.length === 0) {
+                    conversationDiv.innerHTML = '<p>No messages found between these users.</p>';
+                } else {
+                    fetchSenderProfilePic(senderEmail)
+                        .then(senderProfilePic => {
+                            messages.forEach(message => {
+                                const messageDiv = document.createElement('div');
+                                const senderClass = message.senderEmail === senderEmail ? 'sender' : 'recipient';
+                                messageDiv.classList.add('message', senderClass);
+
+                                // Determine which image to use: sender's logo or job seeker's profile picture
+                                const profilePic = message.senderEmail === senderEmail ? senderProfilePic : jobSeekerProfilePic;
+
+                                let attachmentInfo = '';
+                                if (message.attachment) {
+                                    // Show an icon instead of the filename
+                                    attachmentInfo = `<div class="message-attachment"><img src="/images/atc.png" alt="Attachment" style="margin-left:10px;margin-right: 10px;margin-top: 10px ;width: 25px; height: 25px;"> </div>`;
+                                }
+                                let actionButtons = '';
+                                if (message.senderEmail === senderEmail && !message.isRead) {
+                                    actionButtons = `<img src="/images/delete.png" class="icon-button delete-button" style="margin-left:10px; margin-right: 10px; margin-top: 10px; width: 15px; height: 15px;" data-message-id="${message.id}" alt="Delete">`;
+                                } else if (message.senderEmail !== senderEmail && !message.isRead) {
+                                    actionButtons = `<img src="/images/mar.png" class="icon-button mark-read-button" style="margin-left:10px; margin-right: 10px; margin-top: 10px; width: 10px; height: 15px;" data-message-id="${message.id}" alt="Mark as Read">`;
+                                }
+
+
+                                messageDiv.innerHTML = `
+                                <img src="${profilePic}" alt="Profile Picture">
+                                <p>${message.content}</p>
+                                ${attachmentInfo}
+                                <div class="message-actions">${actionButtons}</div>
+                            `;
+                                conversationDiv.appendChild(messageDiv);
+                            });
+
+                            // Add event listeners for delete and mark as read buttons
+                            document.querySelectorAll('.delete-button').forEach(button => {
+                                button.addEventListener('click', function () {
+                                    const messageId = this.getAttribute('data-message-id');
+                                    deleteMessage(messageId);
+                                });
+                            });
+
+                            document.querySelectorAll('.mark-read-button').forEach(button => {
+                                button.addEventListener('click', function () {
+                                    const messageId = this.getAttribute('data-message-id');
+                                    markMessageAsRead(messageId);
+                                });
+                            });
+
+                            conversationDiv.scrollTop = conversationDiv.scrollHeight;
+                        });
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching conversation:', error);
+            });
+    }
+
+
+
+    function deleteMessage(messageId) {
+        fetch(`/api/messages/delete/${messageId}`, {
+            method: 'DELETE',
+        })
+            .then(response => {
+                if (response.ok) {
+                    return response.text();
+
+                } else {
+                    return response.text().then(errorMessage => {
+                        throw new Error(errorMessage); // Throw error to catch block
+                    });
+
+                }
+            })
+
+            .then(successMessage => {
+                alert(successMessage); // Show success message to user
+
+                const recipientEmail = document.getElementById('email').textContent;
+                fetchConversation(recipientEmail);
+            })
+            .catch(error => {
+                alert(error.message); // Show error message to user
+            });
+
+    }
+
+
+    // Mark message as read
+    function markMessageAsRead(messageId) {
+        fetch(`/api/messages/mark-as-read/${messageId}`, {
+            method: 'POST',
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to mark message as read: ' + response.statusText);
+                }
+                console.log('Message marked as read');
+                // Reload conversation after marking as read
+                const recipientEmail = document.getElementById('email').textContent;
+                fetchConversation(recipientEmail);
+            })
+            .catch(error => {
+                console.error('Error marking message as read:', error);
+            });
+    }
+
+
+    // Fetch sender profile picture from employer profile
+    function fetchSenderProfilePic(senderEmail) {
+        return fetch(`/api/employers/profile?email=${encodeURIComponent(senderEmail)}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Error fetching sender profile picture');
+                }
+                return response.json();
+            })
+            .then(data => {
+                return `data:image/jpeg;base64,${data.companyLogo}`;
+            })
+            .catch(error => {
+
+                return 'path/to/default-profile-pic.jpg'; // Use default picture if there's an error
+            });
+    }
+
+
+    // Send Message
+    document.getElementById('sendMessageForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+        const content = document.getElementById('content').value.trim();
+        const recipientEmail = document.getElementById('email').textContent; // Profile email (Recipient)
+        const senderEmail = localStorage.getItem('email'); // Sender email from localStorage
+
+        if (!senderEmail || !recipientEmail) {
+            console.error('Both sender and recipient emails are required');
+            return;
+        }
+
+        const fileInput = document.getElementById('file');
+        const file = fileInput.files[0];
+
+        const formData = new FormData();
+        formData.append('content', content);
+        formData.append('senderEmail', senderEmail);  // Add sender email to the formData
+        formData.append('recipientEmail', recipientEmail);  // Add recipient email to the formData
+        if (file) {
+            formData.append('file', file);
+        }
+
+        fetch(`/api/messages/messages`, {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => {
+                const contentType = response.headers.get("content-type");
+                if (contentType && contentType.indexOf("application/json") !== -1) {
+                    return response.json(); // Parse as JSON if content-type is JSON
+                } else {
+                    return response.text(); // Otherwise, parse as plain text
+                }
+            })
+            .then(data => {
+                if (typeof data === 'string') {
+                    console.log('Message sent successfully:', data);
+                } else {
+                    console.log('Message sent successfully:', data);
+                }
+                fetchConversation(recipientEmail); // Refresh conversation after sending message
+                document.getElementById('content').value = ''; // Clear the message input
+                fileInput.value = ''; // Clear the file input
+            })
+            .catch(error => {
+                console.error('Error sending message:', error);
+            });
+
+    });
+
+
+    document.getElementById('messageButton').addEventListener('click', function () {
+        const messageWindow = document.getElementById('messageWindow');
+        messageWindow.classList.add('open');
+    });
+
+
+    document.getElementById('closeMessageWindow').addEventListener('click', function () {
+        const messageWindow = document.getElementById('messageWindow');
+        messageWindow.classList.remove('open');
+    });
+
+    // Initialize by fetching the profile when the page loads
+    document.addEventListener('DOMContentLoaded', function () {
+        fetchProfile();
+    });
+
+    function updateFileName() {
+        const fileInput = document.getElementById('file');
+        const fileNameDisplay = document.getElementById('fileName');
+
+        if (fileInput.files.length > 0) {
+            fileNameDisplay.textContent = `Selected file: ${fileInput.files[0].name}`;
+        } else {
+            fileNameDisplay.textContent = ''; // Clear if no file is selected
+        }
+    }
+
+
+
+    fetchProfile(); // Fetch profile when the page loads
+</script>
+
+</body>
+</html>
+

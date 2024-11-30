@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Contact Us - JobPortal</title>
+  <style>
+    /* Global Styles */
+    body, html {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      height: 100%;
+      overflow-x: hidden;
+    }
+
+    .logo {
+      height: 50px; /* Adjust height as needed */
+      width: auto; /* Maintain aspect ratio */
+    }
+
+    /* Header Styles */
+    header {
+      position: fixed;
+      width: 99%;
+      background: rgba(0, 0, 0, 0.7);
+      color: white;
+      padding: 10px 20px;
+      text-align: left;
+      z-index: 1000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2em;
+      font-weight: bold;
+    }
+
+    header nav {
+      margin: 0;
+    }
+
+    header nav a {
+      color: white;
+      margin: 0 15px;
+      text-decoration: none;
+      font-size: 1.2em;
+      position: relative;
+      transition: color 0.3s ease;
+    }
+
+    header nav a:hover {
+      color: #007bff;
+    }
+
+    header nav a::after {
+      content: '';
+      position: absolute;
+      width: 0%;
+      height: 2px;
+      bottom: -5px;
+      left: 50%;
+      background-color: #007bff;
+      transition: all 0.3s ease-in-out;
+    }
+
+    header nav a:hover::after {
+      width: 100%;
+      left: 0;
+    }
+
+    .container {
+      width: 80%;
+      margin: auto;
+      overflow: hidden;
+      padding: 50px 0;
+    }
+    h1, h2 {
+      color: #007bff;
+    }
+    .contact-section {
+      background: #fff;
+      padding: 30px;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    .contact-info {
+      margin-bottom: 30px;
+    }
+    .contact-info p {
+      line-height: 1.6;
+    }
+    /* Styling the contact form in a box */
+    .contact-form {
+      background-color: #f9f9f9;
+      padding: 20px;
+      border-radius: 10px;
+      border: 1px solid #ddd;
+      margin-top: 20px;
+    }
+    .contact-form label {
+      display: block;
+      margin-bottom: 5px;
+      margin-top: 15px;
+    }
+    .contact-form input[type="text"],
+    .contact-form input[type="email"],
+    .contact-form textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 5px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    .contact-form button {
+      display: inline-block;
+      padding: 10px 20px;
+      background: #007bff;
+      color: #fff;
+      text-decoration: none;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-top: 15px;
+      width: 100%;
+      font-size: 16px;
+    }
+    .contact-form button:hover {
+      background: #0056b3;
+    }
+    /* Social Media Links */
+    .social-media {
+      margin-top: 30px;
+    }
+    .social-media ul {
+      list-style: none;
+      padding: 0;
+    }
+    .social-media li {
+      display: inline;
+      margin-right: 15px;
+    }
+    .social-media a {
+      color: #007bff;
+      text-decoration: none;
+    }
+    .social-media a:hover {
+      text-decoration: underline;
+    }
+    /* Footer */
+    .footer {
+      background: #333;
+      color: #fff;
+      text-align: center;
+      padding: 15px 0;
+      margin-top: 50px;
+    }
+    /* Style for messages icon */
+    .messages-link {
+
+      position: relative;
+      display: inline-block;
+    }
+
+    .messages-icon {
+      padding-top: 5px;
+      height: 25px; /* Adjust the icon size */
+      width: auto;
+    }
+
+    .unread-count {
+      position: absolute;
+      top: -10px;
+      right: -10px;
+      background-color: #ff0000; /* Red background for the unread count */
+      color: white;
+      border-radius: 50%;
+      padding: 5px 10px;
+      font-size: 0.6em;
+      display: none; /* Initially hidden */
+    }
+
+  </style>
+</head>
+<body>
+
+<!-- Navigation Bar -->
+<header>
+  <a href="/">
+    <img src="images/logo.png" alt="JobMagnet Logo" class="logo">
+  </a>
+  <nav>
+    <a href="/SeekerHomeLogged.html">HOME</a>
+    <a href="/SeekerProfileNew.html">PROFILE</a>
+    <a href="/Companies.html">COMPANIES</a>
+    <a href="/ContactUs1.html">CONTACT</a>
+    <!-- Messages icon with unread count -->
+    <a href="/seeker/seekerUnreadMessages.html" class="messages-link">
+      <img src="images/message.png" alt="Messages" class="messages-icon">
+      <span id="unreadCount" class="unread-count"></span>
+    </a>
+  </nav>
+</header>
+
+<div class="container">
+  <div class="contact-section">
+    <h1>Contact Us</h1>
+    <p>We’d love to hear from you! Whether you have a question about our services, need assistance, or want to provide feedback, we're here to help.</p>
+
+    <div class="contact-info">
+      <h2>Contact Information</h2>
+      <p><strong>Email:</strong> <a href="mailto:e20062@eng.pdn.ac.lk">e20062@eng.pdn.ac.lk</a></p>
+      <p><strong>Phone:</strong> +1 234 567 890</p>
+      <p><strong>Address:</strong> Department of Computer Engineering,<br>Faculty of Engineering,<br>University of Peradeniya,<br>Kandy</p>
+    </div>
+
+    <h2>Send Us a Message</h2>
+    <form id="contact-form" class="contact-form">
+      <input type="hidden" name="Job_Magnet" value="e20062@eng.pdn.ac.lk">
+
+      <div class="form-row">
+        <label for="name">Your Name:</label>
+        <input type="text" id="name" name="from_name" required>
+      </div>
+
+      <div class="form-row">
+        <label for="email">Your Email:</label>
+        <input type="email" id="email" name="email" required>
+      </div>
+
+      <div class="form-row">
+        <label for="subject">Subject:</label>
+        <input type="text" id="subject" name="subject">
+      </div>
+
+      <div class="form-row">
+        <label for="message">Your Message:</label>
+        <textarea id="message" name="message" rows="5" required></textarea>
+      </div>
+
+      <button type="submit">Send Message</button>
+    </form>
+
+    <div class="social-media">
+      <h2>Connect With Us</h2>
+      <p>Follow us on social media:</p>
+      <ul>
+        <li><a href="https://www.linkedin.com/company/jobportal" target="_blank">LinkedIn</a></li>
+        <li><a href="https://www.twitter.com/jobportal" target="_blank">Twitter</a></li>
+        <li><a href="https://www.facebook.com/jobportal" target="_blank">Facebook</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  <p>&copy; 2024 JobPortal. All rights reserved.</p>
+</div>
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/emailjs-com@2.6.4/dist/email.min.js"></script>
+<script type="text/javascript">
+  (function(){
+    emailjs.init("Ho3Eo_rryH4VAPDtm"); // Your actual user ID from EmailJS dashboard
+  })();
+
+  document.addEventListener('DOMContentLoaded', function() { // Ensure DOM is loaded
+    document.getElementById('contact-form').addEventListener('submit', function(event) {
+      event.preventDefault(); // Prevent the default form submit
+
+      // Send the email
+      emailjs.sendForm('service_nh1ak2r', 'template_tmrdd3m', this) // Use your actual service and template IDs
+              .then(function() {
+                alert('Message sent successfully!');
+              }, function(error) {
+                alert('Failed to send message, please try again later.');
+                console.error('Error:', error); // Log the error for debugging
+              });
+    });
+  });
+</script>
+
+</body>
+</html>

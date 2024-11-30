@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employer - Job Applicants</title>
+    <style>
+        /* Basic Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #c3bcbc;
+            color: #0f41e4;
+        }
+
+        .logo {
+            height: 50px; /* Adjust height as needed */
+            width: auto; /* Maintain aspect ratio */
+        }
+
+        /* Navigation Bar */
+        /* Header Styles */
+        header {
+            position: static;
+            width:100%;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 10px 20px;
+            text-align: left;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2em;
+            font-weight: bold;
+        }
+
+        header nav {
+            margin: 0;
+        }
+
+        header nav a {
+            color: white;
+            margin: 0 15px;
+            text-decoration: none;
+            font-size: 1.2em;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        header nav a:hover {
+            color: #007bff;
+        }
+
+        header nav a::after {
+            content: '';
+            position: absolute;
+            width: 0%;
+            height: 2px;
+            bottom: -5px;
+            left: 50%;
+            background-color: #007bff;
+            transition: all 0.3s ease-in-out;
+        }
+
+        header nav a:hover::after {
+            width: 100%;
+            left: 0;
+        }
+        /* Search Bar */
+        #search-bar {
+            display: flex;
+            justify-content: center;
+            margin: 15px 0;
+        }
+
+        #search-bar input {
+            width: 50%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+
+        #search-bar button {
+            padding: 10px 20px;
+            background-color: #0073b1;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+            margin-left: 10px;
+            font-size: 1em;
+        }
+
+        #search-bar button:hover {
+            background-color: #005580;
+        }
+
+        /* Page Specific Styles */
+        main {
+            padding: 20px;
+        }
+
+        #applicants-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .applicant-card {
+            width: 350px;
+            background: rgb(244, 237, 237);
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+            color: black;
+        }
+
+        .applicant-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 15px;
+        }
+
+        .applicant-table td {
+            padding: 15px;
+            border: 1px solid #ddd;
+            vertical-align: top;
+        }
+
+        .applicant-table td:first-child {
+            width: 30%;
+        }
+
+        .button-container {
+            margin-top: 10px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .button, .button-border {
+            padding: 10px 20px;
+            border-radius: 5px;
+            color: white;
+            text-decoration: none;
+            font-size: 1em;
+            text-align: center;
+            display: inline-block;
+        }
+
+        .button {
+            background-color: #0073b1;
+            border: none;
+        }
+
+        .button:hover {
+            background-color: #005580;
+        }
+
+        .button-border {
+            border: 2px solid #0073b1;
+            background-color: transparent;
+            color: #0073b1;
+        }
+
+        .button-border:hover {
+            background-color: #0073b1;
+            color: white;
+        }
+
+        .no-applicants {
+            text-align: center;
+            font-size: 1.2em;
+            color: #666;
+        }
+        /* Style for messages icon */
+        .messages-link {
+
+            position: relative;
+            display: inline-block;
+        }
+
+        .messages-icon {
+            padding-top: 5px;
+            height: 25px; /* Adjust the icon size */
+            width: auto;
+        }
+
+        .unread-count {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background-color: #ff0000; /* Red background for the unread count */
+            color: white;
+            border-radius: 50%;
+            padding: 5px 10px;
+            font-size: 0.6em;
+            display: none; /* Initially hidden */
+        }
+
+    </style>
+</head>
+<body>
+
+<!-- Header with Logo and Navigation -->
+<header>
+    <a href="/">
+        <img src="images/logo.png" alt="Jobmagnet Logo" class="logo">
+    </a>
+    <nav>
+        <a href="/EmpHomeLogged.html">HOME</a>
+        <a href="/EmpviewProfile.html">PROFILE</a>
+        <a href="/applicants.html">APPLICANTS</a>
+        <a href="/PostJob.html">POST A JOB</a>
+        <a href="/PostedJobs.html">POSTED JOBS</a>
+        <a href="/seeker/seekerUnreadMessages.html" class="messages-link">
+            <img src="images/message.png" alt="Messages" class="messages-icon">
+            <span id="unreadCount" class="unread-count"></span>
+        </a>
+    </nav>
+</header>
+
+<!-- Search Bar -->
+<div id="search-bar">
+    <input type="text" placeholder="Search for applicants...">
+    <button>Search</button>
+</div>
+
+<main>
+    <div id="applicants-container">
+        <!-- Applicant cards will be injected here by JavaScript -->
+    </div>
+    <div id="no-applicants" class="no-applicants" style="display: none;">
+        No applicants found.
+    </div>
+</main>
+
+<script>
+    document.addEventListener('DOMContentLoaded', async () => {
+        const recipientEmail = localStorage.getItem('email');
+        if (recipientEmail) {
+            try {
+                const response = await fetch(`/api/messages/unread/${recipientEmail}`);
+                const unreadMessages = await response.json();
+
+                const unreadCount = unreadMessages.length;
+                const unreadCountElement = document.getElementById('unreadCount');
+
+                if (unreadCount > 0) {
+                    unreadCountElement.textContent = unreadCount;
+                    unreadCountElement.style.display = 'inline-block'; // Show the unread count if there are unread messages
+                } else {
+                    unreadCountElement.style.display = 'none'; // Hide if no unread messages
+                }
+            } catch (err) {
+                console.error('Error fetching unread messages:', err);
+            }
+        }
+    });
+    // Get the email from localStorage
+    const email = localStorage.getItem('email');
+    console.log("Email from localStorage is:", email);
+
+    // Fetch the applicants data from the server
+    function fetchApplicants() {
+        fetch(`/api/applications/Email/${email}`, { // Corrected template literal usage
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Network response was not ok");
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log("Data is ", data);
+                const container = document.getElementById('applicants-container');
+                const noApplicants = document.getElementById('no-applicants');
+
+                if (data.length === 0) {
+                    noApplicants.style.display = 'block';
+                    return;
+                }
+
+                noApplicants.style.display = 'none';
+
+                data.forEach(applicant => {
+                    const applicantCard = document.createElement('div');
+                    applicantCard.className = 'applicant-card';
+
+                    // Construct the resume link
+                    const resumeLink = applicant.resume ?
+                        `<a href="/api/applications/downloadResume/${applicant.id}" download>Download Resume</a>` : // Corrected string template
+                        'No resume available';
+
+                    applicantCard.innerHTML = `
+                        <table class="applicant-table">
+                           <!-- <tr>
+                                <td>
+                                    <p><strong>Applied Job:</strong> ${applicant.jobTitle || 'No job title available'}</p>
+                                </td>
+                            </tr>-->
+                            <tr>
+                                <td>
+                                    <p><strong>Name:</strong> ${applicant.seekerName}</p>
+                                    <p><strong>Email:</strong> ${applicant.seekerEmail}</p>
+                                </td>
+                            </tr>
+                        </table>
+                        <div class="button-container">
+                            <a href="/ViewSeekerProfileByEmployer.html?id=${applicant.seekerId}" target="_blank" class="button-border">View Profile</a>
+                            <span class="button-border">${resumeLink}</span>
+                        </div>
+                    `;
+
+                    container.appendChild(applicantCard);
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching applicants:', error);
+            });
+    }
+
+    // Fetch the applicants when the page loads
+    window.onload = fetchApplicants;
+</script>
+
+
+</body>
+</html>

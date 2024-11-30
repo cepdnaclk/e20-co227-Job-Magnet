@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JobMagnet - Job Seeker Profile</title>
+    <style>
+        /* Basic Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #c3bcbc;
+            color: #0f41e4;
+        }
+
+        .logo {
+            height: 50px; /* Adjust height as needed */
+            width: auto; /* Maintain aspect ratio */
+        }
+
+        /* Navigation Bar */
+        /* Header Styles */
+        header {
+            position: static;
+            width:100%;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 10px 20px;
+            text-align: left;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2em;
+            font-weight: bold;
+        }
+
+        header nav {
+            margin: 0;
+        }
+
+        header nav a {
+            color: white;
+            margin: 0 15px;
+            text-decoration: none;
+            font-size: 1.2em;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        header nav a:hover {
+            color: #007bff;
+        }
+
+        header nav a::after {
+            content: '';
+            position: absolute;
+            width: 0%;
+            height: 2px;
+            bottom: -5px;
+            left: 50%;
+            background-color: #007bff;
+            transition: all 0.3s ease-in-out;
+        }
+
+        header nav a:hover::after {
+            width: 100%;
+            left: 0;
+        }
+
+
+        /* Profile Card Container */
+        .profile-container {
+            width: 70%;
+            margin: 80px auto 20px;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: row;
+        }
+
+        /* Profile Card */
+        .profile-card {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 2px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            width: 100%;
+        }
+
+        .left-profile {
+            display: flex;
+            flex-direction: column;
+            width: 30%;
+            background-color: #5d9bf1;
+            color: #fff;
+            padding: 15px;
+            border-radius: 10px 0 0 10px;
+            align-items: center;
+        }
+
+        .upper-section {
+            margin-bottom: 20px;
+            border-bottom: 2px solid #fff;
+            display: flex;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .profile-pic {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 4px solid #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .profile-pic img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .lower-section {
+            flex-grow: 1;
+            text-align: center;
+        }
+
+        .basic-info p {
+            margin: 8px 0;
+            font-size: 1em;
+        }
+
+        .basic-info p strong {
+            color: #fff;
+            font-size: 1.1em;
+        }
+
+        .right-profile {
+            width: 70%;
+            background-color: #f4f4f4;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            border-radius: 0 10px 10px 0;
+        }
+
+        .profile-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-gap: 15px;
+        }
+
+        .profile-info p {
+            margin-bottom: 5px;
+            font-size: 1em;
+            color: #555;
+        }
+
+        .profile-info p strong {
+            color: #333;
+            font-size: 1.1em;
+        }
+
+        .edit-profile-btn {
+            margin-top: 200px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            display: inline-block;
+            align-self: center;
+        }
+
+        .edit-profile-btn:hover {
+            background-color: #0056b3;
+        }
+
+        @media (max-width: 768px) {
+            .profile-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .left-profile, .right-profile {
+                width: 100%;
+            }
+
+            .profile-info {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+        /* Style for messages icon */
+        .messages-link {
+
+            position: relative;
+            display: inline-block;
+        }
+
+        .messages-icon {
+            padding-top: 5px;
+            height: 25px; /* Adjust the icon size */
+            width: auto;
+        }
+
+        .unread-count {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background-color: #ff0000; /* Red background for the unread count */
+            color: white;
+            border-radius: 50%;
+            padding: 5px 10px;
+            font-size: 0.6em;
+            display: none; /* Initially hidden */
+        }
+    </style>
+</head>
+<body>
+<!-- Header with Logo and Navigation -->
+<header>
+    <a href="/">
+        <img src="images/logo.png" alt="JobMagnet Logo" class="logo">
+    </a>
+    <nav>
+        <a href="/SeekerHomeLogged.html">HOME</a>
+        <a href="/SeekerProfileNew.html">PROFILE</a>
+        <a href="/Companies.html">COMPANIES</a>
+        <a href="/ContactUs1.html">CONTACT</a>
+        <!-- Messages icon with unread count -->
+        <a href="/seeker/seekerUnreadMessages.html" class="messages-link">
+            <img src="images/message.png" alt="Messages" class="messages-icon">
+            <span id="unreadCount" class="unread-count"></span>
+        </a>
+    </nav>
+</header>
+
+
+<!-- Profile Section -->
+<div class="profile-container">
+    <!-- Left part: Profile photo and basic details -->
+    <div class="left-profile">
+        <div class="upper-section">
+            <div class="profile-pic">
+                <img id="profilePicture" src="/images/manuja.jpg" alt="Profile Picture">
+            </div>
+        </div>
+        <div class="lower-section basic-info">
+            <p><strong>Full Name:</strong> <span id="fname"></span> <span id="lname"></span></p>
+            <p><strong>Email:</strong> <span id="email"></span></p>
+        </div>
+    </div>
+
+    <!-- Right part: Other profile information -->
+    <div class="right-profile">
+        <div class="profile-info">
+            <p><strong>Date of Birth:</strong> <span id="dob"></span></p>
+            <p><strong>Experience:</strong> <span id="experience"></span></p>
+            <p><strong>Skills:</strong> <span id="skills"></span></p>
+            <p><strong>University:</strong> <span id="university"></span></p>
+            <p><strong>Degree:</strong> <span id="degree"></span></p>
+            <p><strong>Degree Class:</strong> <span id="dclass"></span></p>
+            <p><strong>Projects:</strong> <span id="projects"></span></p>
+            <p><strong>Bio:</strong> <span id="bio"></span></p>
+            <p><strong>Phone:</strong> <span id="phone"></span></p>
+            <p><strong>About Me:</strong> <span id="about"></span></p>
+        </div>
+        <a class="edit-profile-btn" href="/SeekerProfileEditNew.html">Edit Profile</a>
+    </div>
+</div>
+
+<script>
+
+    document.addEventListener('DOMContentLoaded', async () => {
+        const recipientEmail = localStorage.getItem('email');
+        if (recipientEmail) {
+            try {
+                const response = await fetch(`/api/messages/unread/${recipientEmail}`);
+                const unreadMessages = await response.json();
+
+                const unreadCount = unreadMessages.length;
+                const unreadCountElement = document.getElementById('unreadCount');
+
+                if (unreadCount > 0) {
+                    unreadCountElement.textContent = unreadCount;
+                    unreadCountElement.style.display = 'inline-block'; // Show the unread count if there are unread messages
+                } else {
+                    unreadCountElement.style.display = 'none'; // Hide if no unread messages
+                }
+            } catch (err) {
+                console.error('Error fetching unread messages:', err);
+            }
+        }
+    });
+
+
+    function fetchProfile() {
+        const email = localStorage.getItem('email');
+
+        if (!email) {
+            alert('User not logged in');
+            window.location.href = '/login.html'; // Redirect to login page if not logged in
+            return;
+        }
+
+        fetch(`/api/jobseekers/profile?email=${encodeURIComponent(email)}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok ' + response.statusText);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log(data); // Check the structure of the returned data
+                document.getElementById('email').textContent = data.email;
+                document.getElementById('fname').textContent = data.fname;
+                document.getElementById('lname').textContent = data.lname;
+                document.getElementById('dob').textContent = data.dob;
+                document.getElementById('skills').textContent = data.skills;
+                document.getElementById('experience').textContent = data.experience;
+                document.getElementById('bio').textContent = data.bio;
+                document.getElementById('phone').textContent = data.phone;
+                document.getElementById('university').textContent = data.university;
+                document.getElementById('degree').textContent = data.degree;
+                document.getElementById('dclass').textContent = data.dclass;
+                document.getElementById('projects').textContent = data.projects;
+                document.getElementById('about').textContent = data.about;
+
+                if (data.profilePicture) {
+                    document.getElementById('profilePicture').src = `data:image/png;base64,${data.profilePicture}`;
+                }
+
+            else {
+                    document.getElementById('profilePicture').src = 'default-profile.jpg'; // Fallback image
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching profile:', error);
+                alert('An error occurred while fetching the profile.');
+            });
+    }
+
+    window.onload = fetchProfile; // Fetch profile data when the page loads
+</script>
+</body>
+</html>

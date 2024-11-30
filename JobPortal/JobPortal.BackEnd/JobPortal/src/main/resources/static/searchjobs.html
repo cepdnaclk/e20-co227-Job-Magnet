@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search Jobs</title>
+    <link rel="stylesheet" href="searchjobs.css">
+</head>
+<body>
+<h1>Page for Searching Jobs</h1>
+<div class="container">
+    <div class="search">
+        <h2>Search By: </h2>
+    </div>
+    <form action="/api/company/search-jobs/search" method="GET">
+        <div class="search-types">
+            <input type="radio" id="type" name="search_option" value="type">
+            <label for="type">Type</label><br>
+            <input type="radio" id="title" name="search_option" value="title">
+            <label for="title">Title</label><br>
+            <input type="radio" id="id" name="search_option" value="id">
+            <label for="id">ID</label><br>
+        </div>
+        <div class="search-query">
+            <label for="query">Enter your search:</label><br>
+            <input type="text" id="query" name="query" required><br>
+        </div>
+        <input type="submit" value="Search">
+    </form>
+</div>
+</body>
+</html>

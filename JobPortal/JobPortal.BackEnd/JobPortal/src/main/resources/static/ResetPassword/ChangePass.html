@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reset Password</title>
+</head>
+<body>
+
+<h1>Reset Password</h1>
+
+<form onsubmit="handleSubmit(event)">
+    <!-- New Password field -->
+    <label for="newPassword">New Password:</label><br>
+    <input type="hidden" id="token" name="token">
+    <input type="password" id="newPassword" name="newPassword" required><br><br>
+
+    <!-- Submit button -->
+    <input type="submit" value="Reset Password">
+</form>
+
+<script>
+    // Function to set the hidden token value on page load
+    function setToken() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const token = urlParams.get('token'); // Get token from URL
+        if (token) {
+            document.getElementById('token').value = token; // Set the hidden input value
+        } else {
+            alert('Token is missing from the reset link.');
+        }
+    }
+
+    // Call setToken on page load
+    window.onload = setToken;
+
+    // Function to send the password reset request
+    function resetPassword(token, newPassword) {
+        fetch('http://localhost:8080/api/resetpasswordfinalpart', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                token: token,
+                newPassword: newPassword
+            }),
+        })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                }
+                return response.json().then(errorData => {
+                    // Use the specific error message coming from the backend
+                    throw new Error(errorData.error || 'Invalid request. Please check the details and try again.');
+                });
+            })
+            .then(data => {
+                alert('Your password has been reset successfully!');
+                window.location.href='/Loginfin.html'
+            })
+            .catch(error => {
+                // Display the exact error message received from the backend
+                alert(Error resetting password: ${error.message});
+            });
+    }
+
+
+    // Form submission handler
+    function handleSubmit(event) {
+        event.preventDefault(); // Prevent form from refreshing the page
+
+        const newPassword = document.getElementById('newPassword').value;
+        const token = document.getElementById('token').value; // Get token from hidden input
+        if (token) {
+            resetPassword(token, newPassword); // Call the resetPassword function
+        } else {
+            alert('Token is missing from the reset link.');
+        }
+    }
+</script>
+
+</body>
+</html>

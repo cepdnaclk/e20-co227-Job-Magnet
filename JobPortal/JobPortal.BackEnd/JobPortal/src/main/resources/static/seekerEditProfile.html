@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Job Seeker Profile</title>
+    <style>
+        /* Basic Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        header {
+            background: #007bff;
+            color: #fff;
+            padding: 10px 0;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            background: #333;
+            padding: 10px;
+        }
+
+        nav a {
+            color: #fff;
+            padding: 10px 20px;
+            text-decoration: none;
+            text-transform: uppercase;
+            margin: 0 5px;
+        }
+
+        nav a:hover {
+            background: #007bff;
+            transition: 0.3s;
+        }
+
+        form {
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #fff;
+            max-width: 600px;
+        }
+
+        form label {
+            font-weight: bold;
+        }
+
+        form input, form select, form button {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        form button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            width: auto;
+        }
+
+        form button:hover {
+            background-color: #0056b3;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px 0;
+            background: #333;
+            color: #fff;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>JobMagnet</h1>
+</header>
+
+<nav>
+    <a href="/seekerHome.html">Home</a>
+    <a href="/seekerProfile.html">Profile</a>
+    <a href="/Companies.html">Companies</a>
+    <a href="#">About</a>
+    <a href="#">Contact</a>
+</nav>
+
+<h1>Edit Job Seeker Profile</h1>
+
+<form id="updateProfileForm" enctype="multipart/form-data">
+    <input type="text" name="fname" placeholder="First Name" required>
+    <input type="text" name="lname" placeholder="Last Name" required>
+    <input type="date" name="dob" placeholder="Date of Birth">
+    <input type="password" name="password" placeholder="New Password">
+    <input type="text" name="skills" placeholder="Skills">
+    <input type="text" name="experience" placeholder="Experience">
+    <input type="text" name="phone" placeholder="Mobile Number">
+    <input type="text" name="bio" placeholder="Bio">
+
+
+    <h2>Upload Profile Picture (Optional)</h2>
+    <label for="image">Choose an image:</label>
+    <input type="file" id="image" name="profilePicture" accept="image/*">
+
+
+    <button type="submit">Update Profiles</button>
+</form>
+
+<footer>2024 JobMagnet. All rights reserved.</p>
+</footer>
+
+<script>
+    console.log('Script loaded');
+
+    document.addEventListener('DOMContentLoaded', function () {
+        console.log('DOM fully loaded and parsed');
+        const email = localStorage.getItem('email');
+        console.log('Retrieved email from localStorage:', email);
+
+        fetch(`/api/jobseekers/profile?email=${encodeURIComponent(email)}`)
+            .then(response => response.json())
+            .then(data => {
+                console.log('Fetched profile data:', data);
+                document.querySelector('input[name="fname"]').value = data.fname;
+                document.querySelector('input[name="lname"]').value = data.lname;
+                document.querySelector('input[name="dob"]').value = data.dob;
+                document.querySelector('input[name="skills"]').value = data.skills;
+                document.querySelector('input[name="experience"]').value = data.experience;
+                document.querySelector('input[name="phone"]').value = data.phone;
+                document.querySelector('input[name="bio"]').value = data.bio;
+                document.querySelector('input[name="country"]').value = data.country;
+            })
+            .catch(error => console.error('Error fetching profile:', error));
+    });
+
+    document.getElementById('updateProfileForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent the form from submitting the default way
+
+        console.log('Form submission prevented');
+        
+        const formData = new FormData(this);
+        const data = {
+            email: localStorage.getItem('email'), // Retrieve email from local storage
+            fname: formData.get('fname'),
+            lname: formData.get('lname'),
+            dob: formData.get('dob'),
+            password: formData.get('password'),
+            skills: formData.get('skills'),
+            experience: formData.get('experience'),
+            phone: formData.get('phone'),
+            bio: formData.get('bio'),
+            country: formData.get('country')
+        };
+
+        console.log('Data to be sent:', data);
+
+        fetch('/api/updateJobSeekersProfile', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Response from server:', data);
+                if (data.status) {
+                    alert('Profile Updated Successfully!');
+                     window.location.href = '/seekerProfile.html'; // Redirect to profile page
+                } else {
+                    alert('Profile Update Failed: ' + data.message);
+                }
+            })
+            .catch(error => console.error('Error updating profile:', error));
+    });
+
+
+
+
+
+</script>
+
+</body>
+</html>

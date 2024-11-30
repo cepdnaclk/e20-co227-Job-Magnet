@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Job Postings</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-top: 70px;
+        }
+        .nav-bar {
+            background-color: #333;
+            padding: 10px;
+            text-align: right;
+            margin-bottom: 20px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        .nav-bar a {
+            color: white;
+            text-decoration: none;
+            font-size: 20px;
+            border-radius: 5px;
+            padding-right: 50px;
+        }
+        .nav-bar a:hover {
+            text-decoration: underline;
+            background-color: transparent; /* Remove background on hover */
+        }
+
+        .nav-bar a.selected {
+            text-decoration: underline;
+            background-color: transparent; /* Ensure no background on active state */
+        }
+
+        .job-listings {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+        .view-btn {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .view-btn:hover {
+            background-color: #1901b5;
+        }
+        .no-data {
+            text-align: center;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="nav-bar">
+    <a href="AdminHome.html" >HOME</a>
+</div>
+
+<h1>All Job Postings</h1>
+<div class="job-listings">
+    <table id="jobTable">
+        <thead>
+        <tr>
+            <th>Job ID</th>
+            <th>Job Title</th>
+            <th>Job Type</th>
+            <th>Company ID</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Job listings will be displayed here -->
+        </tbody>
+    </table>
+</div>
+
+<script>
+    var jobId;
+    // Function to fetch job listings from the backend
+    function getJobListings() {
+        fetch('/api/seekers/search-jobs/all')  // Replace with actual API endpoint
+            .then(response => response.json())
+            .then(data => {
+                const jobTableBody = document.querySelector('#jobTable tbody');
+                jobTableBody.innerHTML = ''; // Clear previous listings
+
+                if (data.length === 0) {
+                    jobTableBody.innerHTML = '<tr><td colspan="5" class="no-data">No job postings found.</td></tr>';
+                } else {
+                    data.forEach(job => {
+                        const jobRow = document.createElement('tr');
+
+                        jobId = job.jobId;
+
+                        jobRow.innerHTML = `
+                            <td>${job.jobId}</td>
+                            <td>${job.jobTitle}</td>
+                            <td>${job.jobType}</td>
+                            <td>${job.companyId}</td>
+                            <td>
+                                <button class="view-btn" onclick="viewJobListing(${jobId})">View Job</button>
+                            </td>
+                        `;
+
+                        jobTableBody.appendChild(jobRow);
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching job listings:', error);
+            });
+    }
+
+    // Function to view a specific Job listing
+    function viewJobListing(jobId) {
+        console.log("Job id is: ", jobId);
+        if (!jobId) {
+            console.error('Job ID is undefined.');
+            return;
+        }
+        window.location.href = '/AdminViewJobPost.html?jobId=' + encodeURIComponent(jobId);
+    }
+
+    // Function to go back to the previous page
+    function goBack() {
+        window.history.back();
+    }
+
+    // Load job listings when the page loads
+    window.onload = function() {
+        getJobListings();
+    };
+</script>
+
+</body>
+</html>

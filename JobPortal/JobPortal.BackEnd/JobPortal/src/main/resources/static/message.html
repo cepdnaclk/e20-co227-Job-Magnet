@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Portal Messaging</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            color: #333;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input, textarea, button {
+            padding: 10px;
+            margin-bottom: 10px;
+            width: 100%;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #598ff8;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #598ff8;
+        }
+        #messages {
+            margin-top: 20px;
+        }
+        .message {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 10px;
+            background-color: #fff;
+        }
+        .unread {
+            font-weight: bold;
+            color: red;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Job Portal Messaging</h1>
+
+<!-- Send Message Form -->
+<form id="sendMessageForm">
+    <h2>Send Message</h2>
+    <label for="senderEmail">Sender Email:</label>
+    <input type="email" id="senderEmail" required>
+
+    <label for="recipientEmail">Recipient Email:</label>
+    <input type="email" id="recipientEmail" required>
+
+    <label for="content">Message Content:</label>
+    <textarea id="content" rows="4" required></textarea>
+
+    <label for="file">Attach File (optional):</label>
+    <input type="file" id="file">
+
+    <button type="submit">Send Message</button>
+</form>
+
+<!-- Unread Messages -->
+<h2>Unread Messages</h2>
+<label for="unreadEmail">Enter your email to check unread messages:</label>
+<input type="email" id="unreadEmail">
+<button id="checkUnreadMessages">Check Unread Messages</button>
+
+<div id="unreadMessages"></div>
+
+<!-- Conversation between two users -->
+<h2>Conversation</h2>
+<form id="conversationForm">
+    <label for="user1Email">Your Email:</label>
+    <input type="email" id="user1Email" required>
+
+    <label for="user2Email">Other User's Email:</label>
+    <input type="email" id="user2Email" required>
+
+    <button type="submit">Get Conversation</button>
+</form>
+
+<div id="conversation"></div>
+
+<script>
+    // Send Message
+    document.getElementById('sendMessageForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const formData = new FormData();
+        formData.append('senderEmail', document.getElementById('senderEmail').value);
+        formData.append('recipientEmail', document.getElementById('recipientEmail').value);
+        formData.append('content', document.getElementById('content').value);
+
+        const fileInput = document.getElementById('file');
+        if (fileInput.files.length > 0) {
+            formData.append('file', fileInput.files[0]);
+        }
+
+        fetch('/api/messages/messages', {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => response.text())
+            .then(result => {
+                alert(result);
+                document.getElementById('sendMessageForm').reset();
+            })
+            .catch(error => {
+                console.error('Error sending message:', error);
+                alert('Error sending message');
+            });
+    });
+
+    // Check Unread Messages
+    document.getElementById('checkUnreadMessages').addEventListener('click', function() {
+        const email = document.getElementById('unreadEmail').value;
+        if (!email) {
+            alert('Please enter your email');
+            return;
+        }
+
+        fetch(`/api/messages/unread/${encodeURIComponent(email)}`)
+            .then(response => response.json())
+            .then(messages => {
+                const unreadMessagesDiv = document.getElementById('unreadMessages');
+                unreadMessagesDiv.innerHTML = '';
+
+                if (messages.length === 0) {
+                    unreadMessagesDiv.innerHTML = '<p>No unread messages.</p>';
+                } else {
+                    messages.forEach(message => {
+                        const messageDiv = document.createElement('div');
+                        messageDiv.classList.add('message', message.read ? '' : 'unread');
+                        messageDiv.innerHTML = `
+                        <p><strong>From:</strong> ${message.senderEmail}</p>
+                        <p><strong>Message:</strong> ${message.content}</p>
+                        <button onclick="markAsRead(${message.id})">Mark as Read</button>
+                    `;
+                        unreadMessagesDiv.appendChild(messageDiv);
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching unread messages:', error);
+                alert('Error fetching unread messages');
+            });
+    });
+
+    // Mark Message as Read
+    function markAsRead(messageId) {
+        fetch(`/api/messages/mark-as-read/${messageId}`, {
+            method: 'POST'
+        })
+            .then(() => {
+                alert('Message marked as read');
+                document.getElementById('checkUnreadMessages').click(); // Refresh unread messages
+            })
+            .catch(error => {
+                console.error('Error marking message as read:', error);
+                alert('Error marking message as read');
+            });
+    }
+
+    // Get Conversation Between Two Users
+    document.getElementById('conversationForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const user1Email = document.getElementById('user1Email').value;
+        const user2Email = document.getElementById('user2Email').value;
+
+        fetch(`/api/messages/conversation/${encodeURIComponent(user1Email)}/${encodeURIComponent(user2Email)}`)
+            .then(response => response.json())
+            .then(messages => {
+                const conversationDiv = document.getElementById('conversation');
+                conversationDiv.innerHTML = '';
+
+                if (messages.length === 0) {
+                    conversationDiv.innerHTML = '<p>No messages found between these users.</p>';
+                } else {
+                    messages.forEach(message => {
+                        const messageDiv = document.createElement('div');
+                        messageDiv.classList.add('message');
+
+                        // Check if there is an attachment
+                        let attachmentInfo = '';
+                        if (message.attachment) {
+                            const byteCharacters = atob(message.attachment); // Decode base64 string
+                            const byteNumbers = new Array(byteCharacters.length);
+                            for (let i = 0; i < byteCharacters.length; i++) {
+                                byteNumbers[i] = byteCharacters.charCodeAt(i);
+                            }
+                            const byteArray = new Uint8Array(byteNumbers);
+                            const blob = new Blob([byteArray], { type: message.attachmentMimeType }); // Use the correct MIME type
+                            const url = URL.createObjectURL(blob);
+
+                            // Use the original filename for download
+                            attachmentInfo = `<p><strong>Attachment:</strong> <a href="${url}" download="${message.attachmentName || 'attachment'}">${message.attachmentName || 'Download'}</a></p>`;
+                        }
+
+                        messageDiv.innerHTML = `
+                    <p><strong>${message.senderEmail}:</strong> ${message.content}</p>
+                    ${attachmentInfo}
+                    `;
+                        conversationDiv.appendChild(messageDiv);
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching conversation:', error);
+                alert('Error fetching conversation');
+            });
+    });
+
+</script>
+
+</body>
+</html>

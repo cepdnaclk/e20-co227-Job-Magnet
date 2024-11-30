@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Image Upload</title>
+</head>
+<body>
+<h1>Change Profile Pic</h1>
+
+<form id="uploadForm" action="/api/updateJobSeekersProfile" method="post" enctype="multipart/form-data">
+    <input type="file" id="image" name="image" accept="image/*" required />
+    <button type="submit">Upload</button>
+</form>
+
+<script>
+    document.getElementById('uploadForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const fileInput = document.getElementById('image');
+        const file = fileInput.files[0];
+
+        if (file) {
+            const reader = new FileReader();
+
+            reader.onload = function(event) {
+                const arrayBuffer = event.target.result;
+                const byteArray = new Uint8Array(arrayBuffer);
+
+                console.log('Byte Array:', byteArray);
+
+                // Optionally, send the byte array to the server
+                const formData = new FormData();
+                formData.append('image', file);
+            };
+
+            // Read the file as an ArrayBuffer
+            reader.readAsArrayBuffer(file);
+        }
+    });
+</script>
+</body>
+</html>
+

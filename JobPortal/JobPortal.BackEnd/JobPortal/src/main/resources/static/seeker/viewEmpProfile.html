@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Company Profile</title>
+    <style>
+        /* Basic Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #c3bcbc;
+            color: #0f41e4;
+        }
+
+        .logo {
+            height: 50px; /* Adjust height as needed */
+            width: auto; /* Maintain aspect ratio */
+        }
+
+        /* Navigation Bar */
+        /* Header Styles */
+        header {
+            position: static;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 10px 20px;
+            text-align: left;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2em;
+            font-weight: bold;
+        }
+
+        header nav {
+            margin: 0;
+        }
+
+        header nav a {
+            color: white;
+            margin: 0 15px;
+            text-decoration: none;
+            font-size: 1.2em;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        header nav a:hover {
+            color: #007bff;
+        }
+
+        header nav a::after {
+            content: '';
+            position: absolute;
+            width: 0%;
+            height: 2px;
+            bottom: -5px;
+            left: 50%;
+            background-color: #007bff;
+            transition: all 0.3s ease-in-out;
+        }
+
+        header nav a:hover::after {
+            width: 100%;
+            left: 0;
+        }
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: -80px auto 20px;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            position: relative;
+        }
+        .company-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 20px;
+        }
+        .company-header h1 {
+            font-size: 28px;
+            color: #004080;
+        }
+        .company-header p {
+            font-size: 16px;
+            color: #777;
+        }
+        .company-logo {
+            position: absolute;
+            top: -50px;
+            left: 30px;
+        }
+        .company-logo img {
+            height: 100px;
+            width: 100px;
+            border-radius: 50%;
+            border: 5px solid white;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        .company-details {
+            margin: 20px 0;
+        }
+        .company-details h2 {
+            color: #004080;
+            border-bottom: 3px solid #004080;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+        .company-details p {
+            margin-bottom: 15px;
+            font-size: 16px;
+            color: #555;
+        }
+        .company-metrics {
+            display: flex;
+            justify-content: space-between;
+            margin: 20px 0;
+        }
+        .metric {
+            font-size: 20px;
+            font-weight: bolder;
+            color: #004080;
+            flex: 1;
+            background-color: #f0f0f5;
+            padding: 20px;
+            margin: 0 10px;
+            text-align: center;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        .metric h3 {
+            margin-bottom: 10px;
+            font-size: 26px;
+            color: #004080;
+        }
+        .metric p {
+            font-size: 18px;
+            margin: 0;
+            color:  #004080;
+        }
+        .contact-btn {
+            background-color: #004080;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-transform: uppercase;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        .button {
+            padding: 10px 20px;
+            background-color: #004080;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            border: none;
+        }
+        .button:hover {
+            background-color: #002850;
+        }
+
+        .container1 {
+            text-align: center;
+        }
+
+
+        .social-icons {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .social-icons a {
+            margin: 0 10px;
+            color: #004080;
+            font-size: 24px;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        .social-icons a:hover {
+            color: #002850;
+        }
+        footer {
+            background-color: #004080;
+            color: white;
+            text-align: center;
+            padding: 15px 0;
+            margin-top: 40px;
+        }
+        footer p {
+            margin: 0;
+        }
+        .contact-btn {
+            background-color: #004080;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-transform: uppercase;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        .messaging-window {
+            resize: both; /* Allow resizing from any corner */
+            overflow: hidden; /* Handle content overflow when resized */
+            display: none; /* Hidden by default */
+            position: fixed; /* Fixed positioning for floating window */
+            bottom: 20px; /* Distance from the bottom of the screen */
+            right: 20px; /* Distance from the right of the screen */
+            max-width: 90%; /* Set maximum width */
+            max-height: 80%; /* Set maximum height */
+            min-width: 300px; /* Set minimum width */
+            min-height: 300px;
+            width: 400px; /* Default width */
+            height: 600px; /* Default height */
+            background-color: #fff; /* Background color */
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); /* Softer shadow */
+            border-radius: 12px; /* More pronounced rounded corners */
+            padding: 15px; /* Padding inside the window */
+            z-index: 1000; /* Ensure it stays on top */
+            overflow-y: auto; /* Enable scrolling for overflow content */
+            transition: width 0.3s ease, height 0.3s ease; /* Smooth transition for resizing */
+        }
+
+        /* Adjust size for smaller screens */
+        @media only screen and (max-width: 600px) {
+            .messaging-window {
+                width: 90%; /* Responsive width for small screens */
+                height: 600px; /* Smaller height */
+                bottom: 10px; /* Adjust positioning */
+                right: 10px; /* Adjust positioning */
+            }
+        }
+
+        /* Allow resizing the message window */
+        .messaging-window {
+            resize: both; /* Let users resize the window */
+            max-width: 90%; /* Limit resizing width */
+            max-height: 80%; /* Limit resizing height */
+        }
+
+        .messaging-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        .messaging-header h3 {
+            color: #004080;
+            margin: 0;
+        }
+        #conversation {
+            max-height: 400px; /* Set a max height for the conversation area */
+            overflow-y: auto; /* Enable vertical scrolling */
+            margin-bottom: 20px;
+        }
+        .message {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+        .message.sender {
+            justify-content: flex-end; /* Align sender messages to the right */
+        }
+        .message.recipient {
+            justify-content: flex-start; /* Align recipient messages to the left */
+        }
+        .message img {
+            height: 40px;
+            width: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        .message p {
+            background-color: #f1f1f1;
+            padding: 10px;
+            border-radius: 8px;
+            max-width: 75%;
+            margin-bottom: 5px;
+        }
+        .message.recipient p {
+            background-color: #e0f7fa; /* Different background for recipient messages */
+        }
+        .attachment {
+            color: #004080;
+            text-decoration: none;
+            margin-left: 50px;
+        }
+        .send-message {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px;
+            background-color: #f1f1f1;
+            border-radius: 30px;
+            border: 1px solid #ddd;
+        }
+        .send-message input[type="text"] {
+            width: 80%;
+            padding: 10px;
+            border: none;
+            outline: none;
+            border-radius: 30px;
+            background-color: #fff;
+            margin-left: 10px;
+        }
+        .send-message input[type="file"] {
+            display: none;
+        }
+        .send-message label {
+            margin-right: 10px;
+            cursor: pointer;
+        }
+        .send-message button {
+            padding: 10px 20px;
+            background-color: #004080;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+        }
+        .send-message button:hover {
+            background-color: #002850;
+        }
+        .attachment {
+            margin-top: 5px;
+            font-size: 14px;
+        }
+        #closeBtn {
+            display: flex;
+            align-items: center;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        #closeBtn img.icon {
+            width: 25px; /* Adjust the size of the icon */
+            height: 25px;
+            /* Space between the image and text */
+        }
+        .delete-btn {
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+        }
+
+        .delete-btn img.delete-icon {
+            width: 16px; /* Adjust the size of the delete icon */
+            height: 16px;
+        }
+        .mark-read-btn {
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+        }
+
+        .mark-read-btn img.mark-read-icon {
+            width: 16px; /* Adjust the size of the mark-read icon */
+            height: 16px;
+        }
+
+        .messages-link {
+
+            position: relative;
+            display: inline-block;
+        }
+
+        .messages-icon {
+            padding-top: 5px;
+            height: 25px; /* Adjust the icon size */
+            width: auto;
+        }
+
+        .unread-count {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background-color: #ff0000; /* Red background for the unread count */
+            color: white;
+            border-radius: 50%;
+            padding: 5px 10px;
+            font-size: 0.6em;
+            display: none; /* Initially hidden */
+        }
+
+
+    </style>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+<header>
+    <a href="/">
+        <img src="/images/logo.png" alt="JobMagnet Logo" class="logo">
+    </a>
+    <nav>
+        <a href="/SeekerHomeLogged.html">HOME</a>
+        <a href="/SeekerProfileNew.html">PROFILE</a>
+        <a href="/Companies.html">COMPANIES</a>
+        <a href="/ContactUs1.html">CONTACT</a>
+        <!-- Messages icon with unread count -->
+        <a href="/seeker/seekerUnreadMessages.html" class="messages-link">
+            <img src="/images/message.png" alt="Messages" class="messages-icon">
+            <span id="unreadCount" class="unread-count"></span>
+        </a>
+    </nav>
+</header>
+
+
+
+
+<div class="banner"></div>
+
+<img id="bannerImage" src="#" alt="Company Banner" style="width: 100%; height: 250px; object-fit: cover;">
+
+
+<div class="container">
+    <div class="company-logo">
+        <img id="companyLogo" src="#" alt="Company Logo">
+    </div>
+
+    <div class="company-header">
+        <div>
+            <br>
+            <br>
+            <h1 for="companyName" id="companyName">ABC Tech Solutions</h1>
+
+        </div>
+    </div>
+
+    <div class="company-details" >
+        <h2>About Us</h2>
+        <p for="about" id="about">ABC Tech Solutions is a global leader in delivering innovative tech solutions to businesses. We specialize in software development, IT consulting, and cloud services, and have helped over 500 clients improve their operational efficiency through technology.
+            Founded in 2010, we have continuously pushed the boundaries of technology to offer cutting-edge solutions that meet the needs of our diverse clientele. Our team of 500+ professionals is dedicated to providing world-class services that help businesses achieve their goals.</p>
+    </div>
+
+    <div class="company-details">
+        <h2>Core Values</h2>
+        <p for="coreValues" id="coreValues">At ABC Tech Solutions, our values are at the heart of everything we do. We believe in:
+
+            Innovation and continuous improvement
+            Integrity and accountability
+            Customer-centric solutions
+            Excellence in execution
+        </p>
+    </div>
+
+    <div class="company-details">
+        <h2>Contact Information</h2>
+
+        <br>
+
+        <label for="email">Email: </label>
+        <span id="email"></span>
+        <br>
+        <!--
+                <label for="mobileNo">Phone:</label>
+                <span id="mobileNo"></span>
+                -->
+
+        <label for="address">Address: </label>
+        <span id="address"></span>
+        <br>
+
+    </div>
+
+    <div class="company-metrics">
+        <div class="metric">
+            <label for="no_of_Employees">Employees: </label>
+            <h3><span id="no_of_Employees"></span></h3>
+
+        </div>
+        <div class="metric">
+            <label for="years">In Business </label>
+            <h3><span id="years"></span></h3>
+
+        </div>
+        <div class="metric">
+            <label for="projectsCompleted">Projects Completed </label>
+            <h3><span id="projectsCompleted"></span></h3>
+
+
+        </div>
+    </div>
+
+    <div class="social-icons">
+        <a href="#"><i class="fab fa-linkedin"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-facebook"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+    </div>
+    <br>
+    <div class="container1">
+
+        <button class="contact-btn" id="contactBtn">Contact</button>
+
+
+
+
+
+    </div>
+
+    <!-- Messaging Window -->
+    <div class="messaging-window" id="messagingWindow">
+        <div class="messaging-header">
+            <h3>Messaging</h3>
+            <button id="closeBtn">
+                <img src="/images/close.png" alt="Close Icon" class="icon">
+            </button>
+
+        </div>
+        <div id="conversation"></div>
+        <form id="sendMessageForm" class="send-message">
+            <input type="hidden" id="senderEmail" value="">
+            <input type="hidden" id="recipientEmail" value="">
+            <input type="text" id="content" placeholder="Type a message..." required>
+            <label for="fileInput" class="attachment-icon">
+                <img src="/images/atc.png" alt="Attach" style="cursor: pointer; height: 20px; width: 20px;">
+            </label>
+            <input type="file" id="fileInput" name="file" accept="*/*">
+            <button type="submit">Send</button>
+        </form>
+    </div>
+    <script>
+        function fetchEmpProfile() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const companyId = urlParams.get('companyId');
+
+            if (!companyId) {
+                alert('Company ID not found');
+                window.location.href = '/previouspage.html';
+                return;
+            }
+
+            fetch(`/api/employers/findbyid/${encodeURIComponent(companyId)}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('email').textContent = data.email;
+                    document.getElementById('companyName').textContent = data.companyName;
+                    document.getElementById('address').textContent = data.address;
+                    document.getElementById('about').textContent = data.about;
+                    document.getElementById('years').textContent = data.years;
+                    document.getElementById('no_of_Employees').textContent = data.no_of_Employees;
+                    document.getElementById('projectsCompleted').textContent = data.projectsCompleted;
+                    document.getElementById('coreValues').textContent = data.coreValues;
+                    document.getElementById('companyLogo').src = `data:image/jpeg;base64,${data.companyLogo}`;
+                    document.getElementById('bannerImage').src = `data:image/jpeg;base64,${data.bannerImage}`;
+                })
+                .catch(error => console.error('Error fetching company profile:', error));
+        }
+
+        const contactBtn = document.getElementById('contactBtn');
+        const messagingWindow = document.getElementById('messagingWindow');
+        const closeBtn = document.getElementById('closeBtn');
+
+        contactBtn.addEventListener('click', () => {
+            messagingWindow.style.display = 'block';
+            const senderEmail = localStorage.getItem('email');
+            const recipientEmail = document.getElementById('email').textContent;
+            document.getElementById('senderEmail').value = senderEmail;
+            document.getElementById('recipientEmail').value = recipientEmail;
+            fetchConversation(recipientEmail);
+        });
+
+        closeBtn.addEventListener('click', () => {
+            messagingWindow.style.display = 'none';
+        });
+
+        async function fetchConversation(recipientEmail) {
+            const senderEmail = localStorage.getItem('email');
+            if (!senderEmail) {
+                console.error('Sender email not found');
+                return;
+            }
+
+            fetch(`/api/messages/conversation/${encodeURIComponent(senderEmail)}/${encodeURIComponent(recipientEmail)}`)
+                .then(response => response.json())
+                .then(async messages => {
+                    const conversationDiv = document.getElementById('conversation');
+                    conversationDiv.innerHTML = '';
+
+                    for (const message of messages) {
+                        const messageDiv = document.createElement('div');
+                        messageDiv.classList.add('message');
+
+                        const profilePic = message.senderEmail === senderEmail
+                            ? await fetchSenderProfilePic(senderEmail)
+                            : await fetchRecipientProfilePic(recipientEmail);
+
+                        messageDiv.innerHTML = `
+                        <img src="${profilePic}" alt="Profile">
+                        <p>${message.content}</p>
+                    `;
+
+                        // Set message alignment and classes
+                        if (message.senderEmail === senderEmail) {
+                            messageDiv.classList.add('sender');
+
+                            // Only show delete button for sender messages
+                            const deleteButton = document.createElement('button');
+                            deleteButton.classList.add('delete-btn');
+                            deleteButton.setAttribute('data-id', message.id);
+
+// Add an image to the button
+                            deleteButton.innerHTML = '<img src="/images/delete.png" alt="Delete" class="delete-icon">';
+
+// Add click event listener
+                            deleteButton.addEventListener('click', () => deleteMessage(message.id));
+
+// Append the button to the message div
+                            messageDiv.appendChild(deleteButton);
+
+                        } else {
+                            messageDiv.classList.add('recipient');
+
+                            // Only show mark as read button for recipient messages
+                            if (!message.read) {
+                                const markReadButton = document.createElement('button');
+                                markReadButton.classList.add('mark-read-btn');
+                                markReadButton.setAttribute('data-id', message.id);
+
+                                // Add an image to the button
+                                markReadButton.innerHTML = '<img src="/images/mar.png" alt="Mark as Read" class="mark-read-icon">';
+
+                                // Add click event listener
+                                markReadButton.addEventListener('click', () => markMessageAsRead(message.id));
+
+                                // Append the button to the message div
+                                messageDiv.appendChild(markReadButton);
+                            }
+
+                        }
+
+                        // Check if there is an attachment
+                        // Check if there is an attachment
+                        if (message.attachment) {
+                            // Add a new line before displaying the attachment
+                            const lineBreak = document.createElement('br');
+                            messageDiv.appendChild(lineBreak);
+                            const attachmentDiv = document.createElement('div');
+                            attachmentDiv.classList.add('attachment');
+
+                            // Add attachment icon
+                            const attachmentIcon = document.createElement('img');
+                            attachmentIcon.src = '/images/atc.png'; // Path to your attachment icon
+                            attachmentIcon.alt = 'Attachment';
+                            attachmentIcon.style.width = '20px'; // Adjust size as needed
+                            attachmentIcon.style.height = '20px'; // Adjust size as needed
+                            attachmentDiv.appendChild(attachmentIcon);
+
+                            messageDiv.appendChild(attachmentDiv);
+                        }
+
+                        conversationDiv.appendChild(messageDiv);
+                    }
+
+                    // Scroll to the bottom when new messages are loaded
+                    conversationDiv.scrollTop = conversationDiv.scrollHeight;
+                })
+                .catch(error => console.error('Error fetching conversation:', error));
+        }
+
+        // Function to delete a message
+        function deleteMessage(messageId) {
+            fetch(`/api/messages/delete/${messageId}`, {
+                method: 'DELETE'
+            })
+                .then(response => {
+                    if (response.ok) {
+                        fetchConversation(document.getElementById('recipientEmail').value);
+                    }
+                })
+                .catch(error => console.error('Error deleting message:', error));
+        }
+
+        // Function to mark a message as read
+        function markMessageAsRead(messageId) {
+            fetch(`/api/messages/mark-as-read/${messageId}`, {
+                method: 'POST'
+            })
+                .then(response => {
+                    if (response.ok) {
+                        fetchConversation(document.getElementById('recipientEmail').value);
+                    }
+                })
+                .catch(error => console.error('Error marking message as read:', error));
+        }
+        function fetchSenderProfilePic(senderEmail) {
+            return fetch(`/api/jobseekers/profile?email=${encodeURIComponent(senderEmail)}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Error fetching sender profile picture');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    return `data:image/jpeg;base64,${data.profilePicture}`;
+                })
+                .catch(error => {
+                    console.error('Error fetching sender profile picture:', error);
+                    return 'path/to/default-profile-pic.jpg';
+                });
+        }
+
+        function fetchRecipientProfilePic(recipientEmail) {
+            return fetch(`/api/employers/findbyemail/${encodeURIComponent(recipientEmail)}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Error fetching recipient profile picture');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    return `data:image/jpeg;base64,${data.companyLogo}`;
+                })
+                .catch(error => {
+                    console.error('Error fetching recipient profile picture:', error);
+                    return 'path/to/default-company-logo.jpg';
+                });
+        }
+
+        // Send message
+        document.getElementById('sendMessageForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const content = document.getElementById('content').value;
+            const senderEmail = document.getElementById('senderEmail').value;
+            const recipientEmail = document.getElementById('recipientEmail').value;
+            const fileInput = document.getElementById('fileInput');
+
+            const formData = new FormData();
+            formData.append('content', content);
+            formData.append('senderEmail', senderEmail);
+            formData.append('recipientEmail', recipientEmail);
+            if (fileInput.files.length > 0) {
+                formData.append('file', fileInput.files[0]);
+            }
+
+            fetch('/api/messages/messages', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => {
+                    if (response.ok) {
+                        document.getElementById('content').value = ''; // Clear input
+                        fetchConversation(recipientEmail); // Refresh conversation
+                    }
+                })
+                .catch(error => console.error('Error sending message:', error));
+        });
+
+        // Fetch the employer profile on page load
+        window.onload = fetchEmpProfile;
+    </script>
+</body>
+</html>

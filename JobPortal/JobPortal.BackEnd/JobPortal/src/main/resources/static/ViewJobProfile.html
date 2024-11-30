@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Details</title>
+    <style>
+        /* Updated body with background image */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        .header {
+            background-color: #0944f5f3;
+            color: white;
+            width: 1000px;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 36px;
+            margin: 0;
+        }
+
+        .header p {
+            margin-top: 10px;
+            font-size: 20px;
+        }
+
+        .contact-btn {
+            margin-top: 20px;
+            background-color: #ff7f50;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            font-size: 18px;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        .contact-btn:hover {
+            background-color: #e06b3a;
+        }
+
+        .container {
+            width: 50%;
+            margin: 40px auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            border-bottom: 3px solid #2d8699;
+            padding-bottom: 10px;
+            color: #2d8699;
+            margin-bottom: 20px;
+        }
+
+        .job-detail {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .job-detail label {
+            font-weight: bold;
+            color: #333;
+            width: 30%;
+        }
+
+        .job-detail p {
+            width: 65%;
+            margin: 0;
+            color: #555;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .delete-btn, .redirect-btn {
+            display: inline-block;
+            background-color: #2320fe;
+            color: white;
+            padding: 10px 30px;
+            text-decoration: none;
+            font-size: 18px;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+            margin: 10px;
+        }
+
+        .delete-btn:hover, .redirect-btn:hover {
+            background-color: #121314;
+        }
+        .close-btn {
+            cursor: pointer;
+            font-size: 24px; /* Adjust size as needed */
+            color: #333; /* Text color */
+            position: absolute; /* Position it relative to the container */
+            top: 10px; /* Distance from the top */
+            right: 10px; /* Distance from the right */
+            background-color: transparent; /* No background */
+            border: none; /* No border */
+            padding: 5px; /* Some padding for better clickability */
+            border-radius: 50%; /* Round shape */
+            transition: background-color 0.3s; /* Smooth transition for hover effect */
+        }
+
+        .close-btn:hover {
+            background-color: #f1f1f1; /* Light gray on hover */
+        }
+
+
+
+    </style>
+</head>
+<body>
+
+<div class="container" style="position: relative;"> <!-- Container with position relative -->
+    <div style="display: flex; align-items: center;">
+        <img id="companyLogo" src="" alt="Company Logo" style="width: 50px; height: 50px; margin-right: 10px;">
+        <h1 style="margin: 0;">Company: <span id="companyName">[companyName]</span></h1>
+    </div>
+    <button id="closeBtn" class="close-btn">&times;</button> <!-- Changed to button with class -->
+</div>
+
+<!-- Job Details Container -->
+<div class="container">
+    <h2>Job Information</h2>
+
+    <div class="job-detail">
+        <label for="jobTitle">Job Title:</label>
+        <p id="jobTitle">[jobTitle]</p>
+    </div>
+
+    <div class="job-detail">
+        <label for="type">Type:</label>
+        <p id="type">[jobType]</p>
+    </div>
+
+    <div class="job-detail">
+        <label for="position">Position:</label>
+        <p id="position">[position]</p>
+    </div>
+
+    <div class="job-detail">
+        <label for="primarySkill">Primary Skill:</label>
+        <p id="primarySkill">[primarySkill]</p>
+    </div>
+
+    <div class="job-detail">
+        <label for="secondarySkill">Secondary Skill:</label>
+        <p id="secondarySkill">[secondarySkill]</p>
+    </div>
+
+    <div class="job-detail">
+        <label for="otherSkills">Other Skills:</label>
+        <p id="otherSkills">[otherSkills]</p>
+    </div>
+
+    <div class="job-detail">
+        <label for="location">Location:</label>
+        <p id="location">[location]</p>
+    </div>
+
+    <div class="job-detail">
+        <label for="experience">Experience Required:</label>
+        <p id="experience">[experience]</p>
+    </div>
+
+    <div class="job-detail">
+        <label for="salary">Salary:</label>
+        <p id="salary">[salary]</p>
+    </div>
+
+    <div class="job-detail">
+        <label for="responsibilities">Responsibilities:</label>
+        <p id="responsibilities">[responsibilities]</p>
+    </div>
+
+    <div class="job-detail">
+        <label for="description">Other:</label>
+        <p id="description">[other]</p>
+    </div>
+
+    <div class="job-detail">
+        <label for="other">Other:</label>
+        <p id="other">[other]</p>
+    </div>
+
+    <div class="footer">
+
+        <!-- Redirect Button -->
+        <a href="#" class="redirect-btn" id="redirectBtn">Apply</a>
+    </div>
+</div>
+
+
+<script>
+    var job_id;
+    // Simulate fetching data from the backend (replace with actual API call)
+    async function fetchJobDetails() {
+        try {
+            const params = new URLSearchParams(window.location.search);
+            const jobId = params.get('jobId');
+            console.log('Job ID from URL:', jobId);
+
+            job_id = jobId;
+
+            const response = await fetch(`/api/seekers/search-jobs/findByJobId/${jobId}`); // Replace with your API URL
+            const data = await response.json();
+
+            const companyId = data.companyId;
+            console.log("company id is: ",companyId);
+
+            // Dynamically update the HTML elements with the fetched data
+            document.getElementById('jobTitle').textContent = data.jobTitle;
+            document.getElementById('type').textContent = data.jobType;
+            document.getElementById('position').textContent = data.jobPosition;
+            document.getElementById('primarySkill').textContent = data.primaryskill;
+            document.getElementById('secondarySkill').textContent = data.secondaryskill;
+            document.getElementById('otherSkills').textContent = data.otherskills;
+            document.getElementById('location').textContent = data.location;
+            document.getElementById('experience').textContent = data.experiencerequired;
+            document.getElementById('salary').textContent = data.salary;
+            document.getElementById('responsibilities').textContent = data.responsibilities;
+            document.getElementById('description').textContent = data.description;
+            document.getElementById('other').textContent = data.other;
+
+            // const companyId = data.companyId;
+            console.log("company id is: ",companyId);
+
+            // Fetch company details using the companyId
+            const companyResponse = await fetch(`/api/employers/findbyid/${companyId}`);
+            const companyData = await companyResponse.json();
+
+            // Update the company name on the page
+            document.getElementById('companyName').textContent = companyData.companyName;
+            console.log("company name is :",companyData.companyName);
+
+            // Update company logo
+            // Update company logo
+            const companyLogo = document.getElementById('companyLogo');
+            companyLogo.src = companyData.profilePictureUrl || 'images/defaultcompanylogo.png'; // Use a default image if the URL is not available
+            console.log("Company logo URL is:", companyData.profilePictureUrl);
+
+        } catch (error) {
+            console.error('Error fetching job details:', error);
+        }
+    }
+
+    // Function to delete job posting
+
+
+    // Function to redirect to another page with jobId as a query parameter
+    document.getElementById('redirectBtn').addEventListener('click', function() {
+        if (job_id) {
+            window.location.href = `applications.html?jobId=${job_id}`; // Replace with the target page
+        } else {
+            alert('Job ID is not available.');
+        }
+    });
+
+
+    // Call the function to fetch job details when the page loads
+    window.onload = fetchJobDetails;
+
+    document.getElementById('closeBtn').addEventListener('click', function() {
+        window.location.href = 'SeekerHomeLogged.html';
+    });
+
+</script>
+</body>
+</html>

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Job Employers</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-top: 70px;
+        }
+        .nav-bar {
+            background-color: #333;
+            padding: 10px;
+            text-align: right;
+            margin-bottom: 20px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        .nav-bar a {
+            color: white;
+            text-decoration: none;
+            font-size: 20px;
+            border-radius: 5px;
+            padding-right: 50px;
+        }
+        .nav-bar a:hover {
+            text-decoration: underline;
+            background-color: transparent; /* Remove background on hover */
+        }
+
+        .nav-bar a.selected {
+            text-decoration: underline;
+            background-color: transparent; /* Ensure no background on active state */
+        }
+        .employer-listings {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+        .view-btn {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .view-btn:hover {
+            background-color: #0056b3;
+        }
+        .no-data {
+            text-align: center;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="nav-bar">
+    <a href="javascript:void(0)" onclick="goBack()">HOME</a>
+
+</div>
+
+<h1>All Job Employers</h1>
+<div class="employer-listings">
+    <table id="jobEmployersTable">
+        <thead>
+        <tr>
+            <th>Employer ID</th>
+            <th>Company Name</th>
+            <th>Email</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Job employers will be displayed here -->
+        </tbody>
+    </table>
+</div>
+
+<script>
+    // Function to fetch job employers from the backend
+    function getJobEmployers() {
+        fetch('/api/employers/all')  // Replace with actual API endpoint
+            .then(response => response.json())
+            .then(data => {
+                const jobEmployersTableBody = document.querySelector('#jobEmployersTable tbody');
+                jobEmployersTableBody.innerHTML = ''; // Clear previous listings
+
+                if (data.length === 0) {
+                    jobEmployersTableBody.innerHTML = '<tr><td colspan="4" class="no-data">No job employers found.</td></tr>';
+                } else {
+                    data.forEach(employer => {
+                        const employerRow = document.createElement('tr');
+
+                        employerRow.innerHTML = `
+                            <td>${employer.id}</td>
+                            <td>${employer.companyName}</td>
+                            <td>${employer.email}</td>
+                            <td>
+                                <button class="view-btn" onclick="viewJobEmployers(${employer.id})">View Profile</button>
+                            </td>
+                        `;
+
+                        jobEmployersTableBody.appendChild(employerRow);
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching job employers:', error);
+            });
+    }
+
+    // Function to see a specific job employer
+    function viewJobEmployers(employerId) {
+        console.log("Employer ID is: ", employerId);
+        if (!employerId) {
+            console.error('Employer ID is undefined.');
+            return;
+        }
+        window.location.href = '/AdminSingleEmployerView.html?employerId=' + encodeURIComponent(employerId);
+    }
+
+    function goBack() {
+        window.location.href = 'AdminHome.html';
+    }
+
+    // Load job listings when the page loads
+    window.onload = function() {
+        getJobEmployers();
+    };
+</script>
+
+</body>
+</html>

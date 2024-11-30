@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post a Job</title>
+    <style>
+        /* General reset and styling */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body, html {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #71b7e6, #9b59b6);
+            overflow: hidden; /* Prevent body scroll */
+        }
+
+        /* Blurred background */
+        .blurred-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('images/office4.jpg');
+            background-size: cover;
+            background-position: center;
+            z-index: 1;
+        }
+
+        /* Container styling */
+        .container {
+            width: 100%;
+            max-width: 800px;
+            max-height: 90vh; /* Set max-height to allow scrolling */
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 25px 30px;
+            border-radius: 8px;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+            z-index: 2;
+            position: relative;
+            overflow-y: scroll; /* Enable vertical scrolling */
+        }
+
+        /* Hide scrollbars for Webkit browsers */
+        .container::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* Hide scrollbars for Firefox */
+        .container {
+            -ms-overflow-style: none; /* IE and Edge */
+            scrollbar-width: none; /* Firefox */
+        }
+
+        .container::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: linear-gradient(100deg, rgb(0, 21, 255), #21CBF3);
+            clip-path: ellipse(80% 100% at 50% 0%);
+            z-index: -1;
+        }
+
+        /* Heading styling */
+        h1 {
+            text-align: center;
+            margin-bottom: 70px;
+            font-size: 35px;
+            color: rgb(255, 255, 255);
+        }
+
+        /* Form styling */
+        form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        /* Input group styling */
+        .input-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .input-group label {
+            margin-bottom: 5px;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .input-group input, .input-group select {
+            height: 40px;
+            padding: 0 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .full-width {
+            grid-column: span 2;
+        }
+
+        .button-group {
+            grid-column: span 2;
+            text-align: center;
+        }
+
+        .btn {
+            padding: 10px 30px;
+            background: linear-gradient(135deg, #0b3ae3, #2d07d6);
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .btn:hover {
+            background: linear-gradient(-135deg, #000000, #060606cc);
+        }
+
+
+    </style>
+</head>
+<body>
+
+<div class="blurred-background"></div>
+
+<div class="container">
+    <h1>POST A JOB</h1>
+    <form id="jobPostingForm">
+        <input type="hidden" id="company_id" name="companyId" value="">
+
+        <div class="input-group">
+            <label for="job_position">Job Position</label>
+            <input type="text" id="job_position" name="jobPosition" required>
+        </div>
+
+        <div class="input-group">
+            <label for="job_title">Job Title</label>
+            <input type="text" id="job_title" name="jobTitle" required>
+        </div>
+
+        <div class="input-group">
+            <label for="job_type">Job Type</label>
+            <select id="job_type" name="jobType" required>
+                <option value="" disabled selected>Select job type</option>
+                <option value="full_time">Full Time</option>
+                <option value="part_time">Part Time</option>
+                <option value="intern">Intern</option>
+                <option value="online">Online</option>
+            </select>
+        </div>
+
+        <div class="input-group">
+            <label for="location">Location</label>
+            <input type="text" id="location" name="location" required>
+        </div>
+
+        <div class="input-group">
+            <label for="primary_skill">Primary Skill</label>
+            <input type="text" id="primary_skill" name="primaryskill" required>
+        </div>
+
+        <div class="input-group">
+            <label for="secondary_skill">Secondary Skill</label>
+            <input type="text" id="secondary_skill" name="secondaryskill">
+        </div>
+
+        <div class="input-group">
+            <label for="other_skills">Other Skills</label>
+            <input type="text" id="other_skills" name="otherskills">
+        </div>
+
+        <div class="input-group">
+            <label for="experience_required">Experience Required</label>
+            <select id="experience_required" name="experiencerequired" required>
+                <option value="">Select Experience</option>
+                <option value="none">Not required</option>
+                <option value="1">1 year</option>
+                <option value="2">2 years</option>
+                <option value="3">3 years</option>
+                <option value="4">4 years</option>
+                <option value="5">More than 5 years</option>
+            </select>
+        </div>
+
+        <div class="input-group">
+            <label for="salary">Salary</label>
+            <input type="text" id="salary" name="salary">
+        </div>
+
+        <div class="input-group">
+            <label for="responsibilities">Responsibilities</label>
+            <input type="text" id="responsibilities" name="responsibilities">
+        </div>
+
+        <div class="input-group full-width">
+            <label for="description">Description</label>
+            <input type="text" id="description" name="description">
+        </div>
+
+        <div class="input-group full-width">
+            <label for="other">Other</label>
+            <input type="text" id="other" name="other">
+        </div>
+
+        <div class="button-group">
+            <button type="button" class="btn submit" onclick="submitJob()">Submit</button>
+            <button type="reset" class="btn reset">Reset</button>
+        </div>
+    </form>
+    <div id="response"></div>
+</div>
+
+<script>
+    let companyId = null;
+
+    async function getCompanyIdFromEmail() {
+        // Retrieve email from localStorage
+        const email = localStorage.getItem('email');
+
+        if (!email) {
+            // Handle the case where email is not found in localStorage
+            console.error("Error: Email not found in localStorage.");
+            document.getElementById('response').innerText = "Error: Email not found in localStorage.";
+            return null;
+        }
+
+        try {
+            console.log("email is:", email);
+            // Fetch companyId from API
+            const response = await fetch(api/employers/findbyemail/${email});
+
+            if (!response.ok) {
+                throw new Error("Network response was not ok.");
+            }
+
+            const data = await response.json();
+
+            console.log(data.id);
+
+            if (data.id) {
+                // Set the companyId in the hidden input field
+                document.getElementById('company_id').value = data.id;
+                companyId = data.id;
+                return data.id;
+            } else {
+                console.error("Error: Company Id not found for the email.");
+                document.getElementById('response').innerText = "Company Id not found.";
+                return null;
+            }
+        } catch (error) {
+            console.error("Error fetching companyName:", error);
+            document.getElementById('response').innerText = "Error fetching Company Name.";
+            return null;
+        }
+    }
+
+    // Function to handle form submission
+    async function submitJob() {
+        if (!companyId) return;
+
+        // Get the form values
+        const form = document.getElementById('jobPostingForm');
+        const jobPosting = {
+            companyId: companyId,
+            jobPosition: form.jobPosition.value,
+            jobTitle: form.jobTitle.value,
+            jobType: form.jobType.value,
+            location: form.location.value,
+            primaryskill: form.primaryskill.value,
+            secondaryskill: form.secondaryskill.value,
+            otherskills: form.otherskills.value,
+            experiencerequired: form.experiencerequired.value,
+            salary: form.salary.value,
+            responsibilities: form.responsibilities.value,
+            description: form.description.value,
+            other: form.other.value
+        };
+
+        try {
+            // Send the data to the API
+            const response = await fetch('/api/company/posting/post', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(jobPosting)
+            });
+
+            if (!response.ok) {
+                throw new Error("Network response was not ok.");
+            }
+
+            const result = await response.json();
+            console.log(result);
+            document.getElementById('response').innerText = "Job posted successfully.";
+
+            window.location.href="/JobPostSuccessful.html"
+
+        } catch (error) {
+            console.error("Error submitting job:", error);
+            document.getElementById('response').innerText = "Error submitting job.";
+        }
+    }
+
+    // Initialize form
+    document.addEventListener('DOMContentLoaded', async function () {
+        await getCompanyIdFromEmail();
+    });
+</script>
+
+</body>
+</html>

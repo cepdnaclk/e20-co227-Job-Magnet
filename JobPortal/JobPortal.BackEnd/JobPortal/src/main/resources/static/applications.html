@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Application</title>
+    <style>
+        body {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f0f0f0; /* Light background */
+        }
+        .application-form {
+            width: 400px; /* Adjusted width */
+            height: 500px;
+            padding: 30px;
+            background-color: rgba(255, 255, 255, 0.9);
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* Center content vertically */
+            align-items: center; /* Center content horizontally */
+            text-align: center; /* Align text in center */
+            position: relative; /* Make the application form the positioning context */
+        }
+
+        .close-button {
+            position: absolute; /* Position it absolutely within the application form */
+            top: 10px; /* Distance from the top */
+            right: 10px; /* Distance from the right */
+            cursor: pointer; /* Change cursor to pointer on hover */
+            font-size: 30px; /* Size of the close icon */
+            color: #171616; /* Red color for close button */
+            background: none; /* No background */
+            border: none; /* No border */
+            z-index: 10; /* Ensure it's above other elements */
+        }
+
+        /* Style for the "Apply for Job" heading */
+        .application-form h2 {
+            font-size: 30px; /* You can adjust the size */
+            color: rgb(23, 24, 23); /* Change the heading color to red */
+            margin-bottom: 10px;
+        }
+
+        /* Horizontal line under the heading */
+        .application-form h2::after {
+            content: "";
+            display: block;
+            width: 400px; /* Full width */
+            height: 2px;
+            background-color: #ccc; /* Color for the horizontal line */
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            width: 100%; /* Ensure form group takes full width */
+            display: flex;
+            flex-direction: column; /* Stack label and input vertically */
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            margin-bottom: 5px;
+            text-align: left;
+            font-size: 20px; /* Increase font size for input headers */
+            font-weight: bold; /* Make it bold for better visibility */
+        }
+
+
+        .form-group input[type="text"],
+        .form-group input[type="email"],
+        .form-group input[type="number"],
+        .form-group input[type="file"] {
+            width: 100%; /* Full width to take up available space */
+            padding: 12px; /* Increase padding for larger input fields */
+            font-size: 18px; /* Increase font size */
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #362ab8;
+            color: white;
+            padding: 15px 0; /* Adjust padding for larger button */
+            width: 100%; /* Full width of the form */
+            border: none;
+            border-radius: 5px;
+            font-size: 18px; /* Larger text for the button */
+            cursor: pointer;
+            display: block;
+            margin: 20px 0; /* Adjust margin to space it out */
+        }
+
+        button:hover {
+            background-color: #2847c5;
+        }
+        .message {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+        .success-page {
+            text-align: center;
+            margin-top: 50px;
+        }
+        .success-page img {
+            width: 150px;
+            height: auto;
+        }
+        .done-button {
+            background-color: #1324e2;
+            color: white;
+            padding: 10px 20px;
+            margin-top: 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .done-button:hover {
+            background-color: #4848e1;
+        }
+        /* Dimming the background */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: none; /* Initially hidden */
+            z-index: 0; /* Below the form */
+        }
+
+        /* Success modal styling */
+        .success-modal {
+            width: 300px;
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1; /* Above the dimmed background */
+            text-align: center;
+        }
+
+        .success-modal img {
+            width: 150px;
+            height: auto;
+        }
+
+
+
+    </style>
+</head>
+<body>
+<div class="overlay"></div>
+
+<div class="application-form" id="applicationFormPage">
+    <form id="jobApplicationForm" enctype="multipart/form-data">
+        <span class="close-button" id="closeButton">&times;</span> <!-- Close Button -->
+        <h2>Apply for Job</h2>
+
+
+
+        <!-- Hidden Job ID and Seeker ID -->
+        <input type="hidden" id="jobId" name="jobId" required>
+        <input type="hidden" id="seekerId" name="seekerId" required>
+
+        <div class="form-group">
+            <label for="seekerName">Your Name:</label>
+            <input type="text" id="seekerName" name="seekerName" required>
+        </div>
+
+        <div class="form-group">
+            <label for="seekerEmail">Your Email:</label>
+            <input type="email" id="seekerEmail" name="seekerEmail" required>
+        </div>
+
+        <div class="form-group">
+            <label for="companyEmail">Company Email:</label>
+            <input type="email" id="companyEmail" name="companyEmail" readonly>
+        </div>
+
+        <input type="hidden" id="companyId" name="companyId">
+
+        <div class="form-group">
+            <label for="resume">Upload Resume (Optional):</label>
+            <input type="file" id="resume" name="resume">
+        </div>
+
+        <!-- Centered Apply Button -->
+        <button type="submit">Apply</button>
+
+        <div class="message" id="message"></div>
+    </form>
+</div>
+
+<div class="success-page" id="successPage" style="display: none;">
+    <h2>Application Successful!</h2>
+    <p>Your job application has been submitted successfully.</p>
+    <img src="/images/posted.jpg" alt="Success">
+    <br>
+    <button class="done-button" id="doneButton">Done</button>
+</div>
+
+<script>
+    function fetchProfile() {
+        const email = localStorage.getItem('email'); // Assuming email is stored in local storage after login
+
+        if (!email) {
+            alert('User not logged in');
+            window.location.href = '/login.html';  // Redirect to login page if email is not available
+            return;
+        }
+
+        // Fetch the seeker profile from the backend
+        fetch(`/api/jobseekers/profile?email=${encodeURIComponent(email)}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('seekerId').value = data.id;
+                document.getElementById('seekerName').value = data.fname + ' ' + data.lname;
+                document.getElementById('seekerEmail').value = data.email;
+            })
+            .catch(error => {
+                console.error('Error fetching profile:', error);
+                alert('Error fetching profile data. Please try again later.');
+            });
+    }
+
+    function fetchJobPosting(jobId) {
+        fetch(`/api/seekers/search-jobs/findByJobId/${encodeURIComponent(jobId)}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('companyId').value = data.companyId;
+                fetchEmployerDetails(data.companyId);
+            })
+            .catch(error => {
+                console.error('Error fetching job posting:', error);
+                alert('Error fetching job posting data.');
+            });
+    }
+
+    function fetchEmployerDetails(companyId) {
+        fetch(`/api/employers/findbyid/${encodeURIComponent(companyId)}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('companyEmail').value = data.email;
+            })
+            .catch(error => {
+                console.error('Error fetching employer details:', error);
+                alert('Error fetching employer details.');
+            });
+    }
+
+    window.onload = function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        let jobId = urlParams.get('jobId');
+
+        if (jobId) {
+            jobId = jobId.trim();  // Trim any leading or trailing spaces
+            document.getElementById('jobId').value = jobId;
+            fetchJobPosting(jobId);
+        }
+
+        fetchProfile(); // Fetch and auto-fill seeker profile
+    };
+
+    // Handle form submission
+    document.getElementById('jobApplicationForm').addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        const jobId = document.getElementById('jobId').value;
+        const seekerId = document.getElementById('seekerId').value;
+        const seekerName = document.getElementById('seekerName').value;
+        const seekerEmail = document.getElementById('seekerEmail').value;
+        const companyId = document.getElementById('companyId').value;
+        const companyEmail = document.getElementById('companyEmail').value;
+        const resume = document.getElementById('resume').files[0];
+
+        const formData = new FormData();
+        formData.append('jobId', jobId);
+        formData.append('seekerId', seekerId);
+        formData.append('seekerName', seekerName);
+        formData.append('seekerEmail', seekerEmail);
+        formData.append('companyId', companyId);
+        formData.append('companyEmail', companyEmail);
+        if (resume) {
+            formData.append('resume', resume);
+        }
+
+        fetch('http://localhost:8080/api/applications/apply', {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to submit application');
+                }
+                return response.json();
+            })
+            .then(data => {
+                document.getElementById('applicationFormPage').style.display = 'none';
+                document.getElementById('successPage').style.display = 'block';
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error submitting the application.');
+            });
+    });
+
+    // Handle "Done" button click
+    document.getElementById('doneButton').addEventListener('click', function () {
+        window.location.href = `/SeekerHomeLogged.html`;
+    });
+
+    document.getElementById('closeButton').addEventListener('click', function () {
+        window.location.href = 'SeekerHomeLogged.html';
+    });
+
+</script>
+
+</body>
+</html>
