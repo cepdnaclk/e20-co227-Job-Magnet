@@ -41,7 +41,7 @@ Job Magnet is a one-stop solution for job seekers and employers, offering a mode
 
 ## Other Sub Topics
 
-Key Highlights:
+#### Key Highlights:
 
 For Job Seekers:
 Create professional profiles with resumes and skill details.
@@ -61,7 +61,7 @@ Responsive design for seamless access across devices.
 Dynamic slideshow banners and modern UI for better user engagement.
 A robust backend to support real-time interactions and secure data management.
 
-Technology Stack:
+#### Technology Stack:
 
 Frontend: HTML, CSS, JavaScript (responsive design).
 
