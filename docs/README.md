@@ -21,10 +21,10 @@ This is a sample image, to show how to add images to your page. To learn more op
  -->
 
 ## Team
--  E/20/062, K.S.Dhananji, [email](mailto:e20062@eng.pdn.ac.lk)
--  E/20/121, H.P.M.S.Gunasinha, [email](mailto:e20121@eng.pdn.ac.lk)
--  E/20/259, Munasinghe S.L., [email](mailto:e20259@eng.pdn.ac.lk)
--  E20/376,R.M.M.Shyamantha, [email](mailto:e20376@eng.pdn.ac.lk)
+-  **E/20/062**, K.S.Dhananji, e20062@eng.pdn.ac.lk
+-  **E/20/121**, H.P.M.S.Gunasinha,e20121@eng.pdn.ac.lk
+-  **E/20/259**, Munasinghe S.L.,e20259@eng.pdn.ac.lk
+- ** E/20/376**,R.M.M.Shyamantha, :e20376@eng.pdn.ac.lk
 
 ## Table of Contents
 1. [Introduction](#introduction)
