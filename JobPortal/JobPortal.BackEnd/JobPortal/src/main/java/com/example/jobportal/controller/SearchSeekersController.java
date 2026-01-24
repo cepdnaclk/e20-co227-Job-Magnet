@@ -13,12 +13,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Controller for handling job seeker search operations.
+ */
 @Controller
 @RequestMapping("/api/search-seekers")
 public class SearchSeekersController {
     @Autowired
     private SearchSeekersService searchSeekersService;
 
+    /**
+     * Searches for job seekers by keyword.
+     *
+     * @param keyword The keyword to search for.
+     * @return A list of job seekers that match the keyword.
+     */
     @GetMapping("/search/{keyword}")
     public ResponseEntity<?>searchSeekers(@PathVariable("keyword")String keyword){
         List<RegJobSeeker> seekers = new ArrayList<>();

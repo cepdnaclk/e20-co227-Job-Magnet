@@ -19,8 +19,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Controller for handling employer registration and management.
+ */
 @RestController
 @RequestMapping("/api/employers")
+@CrossOrigin(origins = "http://localhost:5173")
 public class RegEmployerController {
 
     public final RegJobEmployerService regJobEmployerService;
@@ -31,13 +35,21 @@ public class RegEmployerController {
         this.regJobEmployerService = regJobEmployerService;
         this.regJobEmployerServiceImpl=regJobEmployerServiceImpl;
     }
-
+    /**
+     * Test endpoint to check if the controller is working.
+     * @return A test string.
+     */
     @GetMapping("/test")
     public String test(){
         return "test success";
     }
 
 
+    /**
+     * Registers a new job employer.
+     * @param jobEmployerDTO The DTO containing the employer's registration details.
+     * @return A response entity with the registration status.
+     */
     @PostMapping("/registration")
     public ResponseEntity<Map<String, Object>> registerJobEmployer(@RequestBody RegJobEmployerDTO jobEmployerDTO) {
         Map<String, Object> response = new HashMap<>();
@@ -60,12 +72,21 @@ public class RegEmployerController {
     }
 
 
+    /**
+     * Retrieves all registered employers.
+     * @return A list of all employers.
+     */
     @GetMapping("/all")
     public List<RegJobEmployers> getAllEmployers(){
         return regJobEmployerServiceImpl.getAllEmployers();
     }
 
 
+    /**
+     * Retrieves an employer by their ID.
+     * @param id The ID of the employer.
+     * @return The employer details.
+     */
     @GetMapping("/findbyid/{id}")
     public ResponseEntity<RegJobEmployers> getEmployerById(@PathVariable Long id){
         RegJobEmployers jobEmployer=regJobEmployerService.getJobEmployerById(id);
@@ -73,6 +94,11 @@ public class RegEmployerController {
     }
 
 
+    /**
+     * Retrieves an employer by their email.
+     * @param email The email of the employer.
+     * @return The employer details.
+     */
     @GetMapping("/findbyemail/{email}")
     public ResponseEntity<RegJobEmployers> getEmployerByEmail(@PathVariable String email){
         RegJobEmployers jobEmployer=regJobEmployerService.getJobEmployerByEmail(email);
@@ -80,6 +106,11 @@ public class RegEmployerController {
     }
 
 
+    /**
+     * Deletes an employer by their ID.
+     * @param id The ID of the employer to delete.
+     * @return A response entity indicating the success of the operation.
+     */
     @DeleteMapping("/deletebyid/{id}")
     public ResponseEntity<Map<String, Boolean>> deleteJobSeeker(@PathVariable Long id) {
 

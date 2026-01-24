@@ -13,6 +13,9 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * Controller for handling job application-related operations.
+ */
 @RestController
 @RequestMapping("/api/applications")
 public class JobApplicationController {
@@ -20,6 +23,18 @@ public class JobApplicationController {
     @Autowired
     private JobApplicationService jobApplicationService;
 
+    /**
+     * Applies for a job.
+     *
+     * @param jobId The ID of the job to apply for.
+     * @param seekerId The ID of the job seeker applying.
+     * @param companyId The ID of the company.
+     * @param companyEmail The email of the company.
+     * @param seekerName The name of the job seeker.
+     * @param seekerEmail The email of the job seeker.
+     * @param resume The resume file of the job seeker.
+     * @return A response entity with the created job application or an error message.
+     */
     @PostMapping("/apply")
     public ResponseEntity<?> applyToJob(
             @RequestParam("jobId") Long jobId,
@@ -56,6 +71,12 @@ public class JobApplicationController {
         }
     }
 
+    /**
+     * Retrieves job applications by company email.
+     *
+     * @param companyEmail The email of the company.
+     * @return A list of job applications for the specified company.
+     */
     @GetMapping("/Email/{companyEmail}")
     public ResponseEntity<?> getApplicationsByCompanyEmail(
             @PathVariable String companyEmail) {
@@ -68,6 +89,12 @@ public class JobApplicationController {
         return new ResponseEntity<>(applications, HttpStatus.OK);
     }
 
+    /**
+     * Downloads the resume for a specific job application.
+     *
+     * @param id The ID of the job application.
+     * @return The resume file as a byte array.
+     */
     @GetMapping("/downloadResume/{id}")
     public ResponseEntity<byte[]> downloadResume(@PathVariable Long id) {
         try {
@@ -88,6 +115,12 @@ public class JobApplicationController {
         }
     }
 
+    /**
+     * Retrieves job applications by company ID.
+     *
+     * @param companyId The ID of the company.
+     * @return A list of job applications for the specified company.
+     */
     @GetMapping("/Id/{companyId}")
     public ResponseEntity<?> getApplicationsByCompanyId(@PathVariable Long companyId) {
         try {

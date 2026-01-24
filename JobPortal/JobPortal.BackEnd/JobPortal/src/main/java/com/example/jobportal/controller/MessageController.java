@@ -12,6 +12,9 @@ import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Controller for handling messaging operations.
+ */
 @RestController
 @RequestMapping("/api/messages")
 public class MessageController {
@@ -22,6 +25,15 @@ public class MessageController {
         this.messageService = messageService;
     }
 
+    /**
+     * Sends a message.
+     *
+     * @param senderEmail    The email of the sender.
+     * @param recipientEmail The email of the recipient.
+     * @param content        The content of the message.
+     * @param file           The file to be attached to the message (optional).
+     * @return A response entity with a success or error message.
+     */
     @PostMapping("/messages")
     public ResponseEntity<String> sendMessage(
             @RequestParam("senderEmail") String senderEmail,
@@ -60,6 +72,12 @@ public class MessageController {
         return ResponseEntity.ok("Message sent successfully");
     }
 
+    /**
+     * Retrieves unread messages for a recipient.
+     *
+     * @param recipientEmail The email of the recipient.
+     * @return A list of unread messages.
+     */
     @GetMapping("/unread/{recipientEmail}")
     public ResponseEntity<List<MessageDTO>> getUnreadMessages(@PathVariable String recipientEmail) {
         List<Message> messages = messageService.getUnreadMessages(recipientEmail);
@@ -67,18 +85,37 @@ public class MessageController {
         return ResponseEntity.ok(messageDTOs);
     }
 
+    /**
+     * Marks a message as read.
+     *
+     * @param messageId The ID of the message to mark as read.
+     * @return A response entity with an OK status.
+     */
     @PostMapping("/mark-as-read/{messageId}")
     public ResponseEntity<Void> markMessageAsRead(@PathVariable Long messageId) {
         messageService.markMessageAsRead(messageId);
         return ResponseEntity.ok().build();
     }
 
+    /**
+     * Retrieves the conversation between two users.
+     *
+     * @param user1Email The email of the first user.
+     * @param user2Email The email of the second user.
+     * @return A list of messages representing the conversation.
+     */
     @GetMapping("/conversation/{user1Email}/{user2Email}")
     public ResponseEntity<List<MessageDTO>> getConversationBetweenUsers(@PathVariable String user1Email, @PathVariable String user2Email) {
         List<Message> messages = messageService.getConversationBetweenUsers(user1Email, user2Email);
         List<MessageDTO> messageDTOs = messages.stream().map(this::convertToDTO).collect(Collectors.toList());
         return ResponseEntity.ok(messageDTOs);
     }
+    /**
+     * Deletes a message by its ID.
+     *
+     * @param id The ID of the message to delete.
+     * @return A response entity with a success or error message.
+     */
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteMessage(@PathVariable Long id) {
         try {

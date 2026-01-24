@@ -7,6 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+/**
+ * Service for handling administrator-related operations.
+ */
 @Service
 public class AdminService {
 
@@ -16,6 +19,11 @@ public class AdminService {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder; // Autowire the BCryptPasswordEncoder
 
+    /**
+     * Creates a new administrator.
+     *
+     * @param adminDTO The data transfer object containing the admin's details.
+     */
     public void createAdmin(AdminDTO adminDTO) {
         Admin admin = new Admin();
         admin.setEmail(adminDTO.getEmail());
@@ -24,6 +32,12 @@ public class AdminService {
         adminRepository.save(admin);
     }
 
+    /**
+     * Saves a new administrator.
+     *
+     * @param adminDTO The data transfer object containing the admin's details.
+     * @return The saved administrator entity.
+     */
     public Admin saveAdmin(AdminDTO adminDTO) {
         Admin admin = new Admin();
         admin.setEmail(adminDTO.getEmail());

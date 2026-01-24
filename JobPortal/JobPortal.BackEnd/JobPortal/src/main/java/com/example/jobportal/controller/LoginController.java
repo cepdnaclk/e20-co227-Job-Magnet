@@ -3,6 +3,7 @@ package com.example.jobportal.controller;
 
 import com.example.jobportal.Response.LoginResponse;
 import com.example.jobportal.Response.UpdateProfileResponse;
+import com.example.jobportal.Security.JwtService;
 import com.example.jobportal.dto.LoginDTO;
 import com.example.jobportal.dto.UpdateJobSeekerProfileDTO;
 import com.example.jobportal.repository.PasswordResetTokenRepository;
@@ -21,21 +22,33 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
+/**
+ * Controller for handling user login and authentication related requests.
+ */
 @RestController
 @RequestMapping("/api")
+@CrossOrigin(origins = "http://localhost:5173")
 public class LoginController {
     private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
     private final LoginService loginService;
+    private final JwtService jwtService;
     @Autowired
     PasswordResetTokenRepository passwordResetTokenRepository;
     @Autowired
-    public LoginController(LoginService loginService) {
+    public LoginController(LoginService loginService, JwtService jwtService) {
         this.loginService = loginService;
+        this.jwtService = jwtService;
     }
 
 
 
 
+    /**
+     * Handles admin login requests.
+     *
+     * @param loginDTO The login credentials.
+     * @return A response entity with the login status.
+     */
     @PostMapping("/adminlogin")
     public ResponseEntity<Map<String, Object>> adminLogin(@RequestBody LoginDTO loginDTO) {
         try {
@@ -45,6 +58,10 @@ public class LoginController {
             response.put("message", loginResponse.getMessage());
             response.put("usertype", loginResponse.getUsertype());
             response.put("email", loginResponse.getEmail()); // Add the email to the response
+            if (Boolean.TRUE.equals(loginResponse.getStatus())) {
+                String token = jwtService.generateToken(loginResponse.getEmail(), loginResponse.getUsertype());
+                response.put("token", token);
+            }
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             // Log the error and return an error response
@@ -56,6 +73,12 @@ public class LoginController {
     }
 
 
+    /**
+     * Handles user login requests.
+     *
+     * @param loginDTO The login credentials.
+     * @return A response entity with the login status.
+     */
     @PostMapping("/login")
     public ResponseEntity<Map<String, Object>> login(@RequestBody LoginDTO loginDTO) {
         try {
@@ -65,6 +88,10 @@ public class LoginController {
             response.put("message", loginResponse.getMessage());
             response.put("usertype", loginResponse.getUsertype());
             response.put("email", loginResponse.getEmail()); // Add the email to the response
+            if (Boolean.TRUE.equals(loginResponse.getStatus())) {
+                String token = jwtService.generateToken(loginResponse.getEmail(), loginResponse.getUsertype());
+                response.put("token", token);
+            }
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             // Log the error and return an error response
@@ -75,6 +102,12 @@ public class LoginController {
         }
     }
 
+    /**
+     * Updates the profile of a job seeker.
+     *
+     * @param updateProfileDTO The data transfer object containing the updated profile information.
+     * @return A response entity with the status of the profile update.
+     */
     @PutMapping("/updateJobSeekersProfile")
     public ResponseEntity<Map<String, Object>> updateProfile(
             @RequestBody UpdateJobSeekerProfileDTO updateProfileDTO) {
@@ -114,6 +147,12 @@ public class LoginController {
             }
         }
     */
+    /**
+     * Sends a password reset link to the specified email address.
+     *
+     * @param request A map containing the user's email address.
+     * @return A response entity with a message indicating the result of the operation.
+     */
     @PostMapping("/sendresetlink")
     public ResponseEntity<Map<String, String>> sendResetLink(@RequestBody Map<String, String> request) {
         String email = request.get("email");
@@ -139,6 +178,12 @@ public class LoginController {
         }
     }
 
+    /**
+     * Resets the user's password using the provided token.
+     *
+     * @param request A map containing the reset token and the new password.
+     * @return A response entity with a message indicating the result of the password reset operation.
+     */
     @PostMapping("/resetpasswordfinalpart")
     public ResponseEntity<Map<String, Object>> passwordReset(@RequestBody Map<String, String> request) {
         System.out.println("Received request: " + request);
@@ -187,6 +232,14 @@ public class LoginController {
     }
 
 
+    /**
+     * Redirects the user to the password reset page.
+     *
+     * @param token The password reset token.
+     * @param response The HTTP servlet response.
+     * @return A response entity with a redirect status.
+     * @throws IOException If an input or output error occurs.
+     */
     @GetMapping("/resetpassword")
     public ResponseEntity<Void> redirectToPasswordResetPage(@RequestParam("token") String token,HttpServletResponse response) throws IOException {
         // Redirect to a new password reset HTML page (e.g., password-reset.html)

@@ -11,6 +11,9 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.Optional;
 
+/**
+ * Controller for handling employer-related operations.
+ */
 @RestController
 @RequestMapping("/api/employers")
 public class EmployerController {
@@ -18,6 +21,12 @@ public class EmployerController {
     @Autowired
     private RegJobEmployerServiceImpl jobEmployerService;
 
+    /**
+     * Retrieves the profile of an employer.
+     *
+     * @param email The email of the employer.
+     * @return The employer's profile.
+     */
     @GetMapping("/profile")
     public ResponseEntity<RegJobEmployers> getEmpProfile(@RequestParam String email) {
         Optional<RegJobEmployers> jobEmployers = jobEmployerService.getEmployerProfile(email);
@@ -25,6 +34,21 @@ public class EmployerController {
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body(null));
     }
 
+    /**
+     * Updates the profile of an employer.
+     *
+     * @param email The email of the employer.
+     * @param companyName The new company name.
+     * @param companyLogo The new company logo.
+     * @param bannerImage The new banner image.
+     * @param govRegNo The new government registration number.
+     * @param about A description of the company.
+     * @param coreValues The core values of the company.
+     * @param years The number of years the company has been in operation.
+     * @param noOfEmployees The number of employees in the company.
+     * @param projectsCompleted The number of projects completed by the company.
+     * @return A response entity with a success or error message.
+     */
     @PutMapping("/profile/update")
     public ResponseEntity<String> updateEmpProfile(@RequestParam String email,
                                                    @RequestParam(required = false) String companyName,
