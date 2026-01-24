@@ -1,0 +1,135 @@
+.login-page {
+    display: grid;
+    min-height: 100vh;
+    width: 100%;
+    place-items: center;
+    background-image: linear-gradient(120deg, rgba(11, 18, 32, 0.8), rgba(11, 18, 32, 0.2)), url('/images/loginback.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 120px 16px 40px;
+}
+
+.wrapper {
+    width: min(420px, 92vw);
+    background: rgba(255, 255, 255, 0.92);
+    border-radius: 20px;
+    box-shadow: var(--shadow-soft);
+    overflow: hidden;
+    position: relative;
+    padding-bottom: 16px;
+}
+
+.wrapper .title {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    text-align: center;
+    line-height: 1.2;
+    color: var(--text-main);
+    padding: 28px 24px 12px;
+}
+
+.custom-hr {
+    border: none;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    margin: 0 auto;
+    width: 80%;
+}
+
+.wrapper form {
+    padding: 10px 28px 30px 28px;
+}
+
+.wrapper form .field {
+    height: 52px;
+    width: 100%;
+    margin-top: 18px;
+    position: relative;
+}
+
+.wrapper form .field input {
+    height: 100%;
+    width: 100%;
+    outline: none;
+    font-size: 1rem;
+    padding-left: 18px;
+    border: 1px solid rgba(15, 118, 110, 0.2);
+    border-radius: 14px;
+    transition: all 0.3s ease;
+    background: #fffaf2;
+}
+
+.wrapper form .field input:focus,
+.wrapper form .field input:valid {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.15);
+}
+
+.wrapper form .field label {
+    position: absolute;
+    top: 50%;
+    left: 18px;
+    color: var(--text-muted);
+    font-weight: 500;
+    font-size: 1rem;
+    pointer-events: none;
+    transform: translateY(-50%);
+    transition: all 0.3s ease;
+}
+
+.wrapper form .field input:focus ~ label,
+.wrapper form .field input:valid ~ label {
+    top: 0%;
+    font-size: 0.85rem;
+    color: var(--primary);
+    background: #fffaf2;
+    padding: 0 6px;
+    transform: translateY(-50%);
+}
+
+.wrapper form .content {
+    display: flex;
+    width: 100%;
+    height: 50px;
+    font-size: 0.95rem;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.wrapper form .field input[type="submit"] {
+    color: #0b1220;
+    border: none;
+    padding-left: 0;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    background: linear-gradient(135deg, #f59e0b, #fbbf24);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.wrapper form .field input[type="submit"]:hover {
+    box-shadow: 0 12px 24px rgba(245, 158, 11, 0.35);
+}
+
+.wrapper form .field input[type="submit"]:active {
+    transform: scale(0.98);
+}
+
+.wrapper form .signup-link {
+    color: var(--text-main);
+    margin-top: 20px;
+    text-align: center;
+}
+
+.wrapper form .pass-link a,
+.wrapper form .signup-link a {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.wrapper form .pass-link a:hover,
+.wrapper form .signup-link a:hover {
+    text-decoration: underline;
+}

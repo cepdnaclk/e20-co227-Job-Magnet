@@ -1,0 +1,139 @@
+.register-page {
+    background-image: linear-gradient(120deg, rgba(11, 18, 32, 0.75), rgba(11, 18, 32, 0.3)), url('/images/loginback.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 120px 16px 40px;
+    font-family: var(--font-body);
+}
+
+.container {
+    background: rgba(255, 255, 255, 0.92);
+    border-radius: 20px;
+    box-shadow: var(--shadow-soft);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    width: min(980px, 95vw);
+    overflow: hidden;
+}
+
+.left-panel {
+    background: url('/images/empreg.jpg') no-repeat center center;
+    background-size: cover;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: left;
+    position: relative;
+    color: #ffffff;
+}
+
+.left-panel::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(140deg, rgba(15, 118, 110, 0.85), rgba(11, 18, 32, 0.55));
+    z-index: 0;
+}
+
+.left-panel h1,
+.left-panel p {
+    position: relative;
+    z-index: 1;
+}
+
+.left-panel h1 {
+    font-family: var(--font-display);
+    font-size: 2.4rem;
+    margin-bottom: 10px;
+}
+
+.left-panel p {
+    font-size: 1.1rem;
+    opacity: 0.9;
+}
+
+.right-panel {
+    background-color: #ffffff;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 12px;
+}
+
+.right-panel table {
+    width: 100%;
+}
+
+.right-panel td {
+    padding: 10px 0;
+    font-size: 0.95rem;
+    color: var(--text-main);
+}
+
+.right-panel input[type="text"],
+.right-panel input[type="email"],
+.right-panel input[type="password"],
+.right-panel input[type="date"] {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 12px;
+    border: 1px solid rgba(15, 118, 110, 0.2);
+    font-size: 0.95rem;
+    color: var(--text-main);
+    background: #fffaf2;
+}
+
+.right-panel input[type="text"]:focus,
+.right-panel input[type="email"]:focus,
+.right-panel input[type="password"]:focus,
+.right-panel input[type="date"]:focus {
+    border-color: var(--primary);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.15);
+}
+
+.register {
+    width: 100%;
+    padding: 12px;
+    border-radius: 999px;
+    border: none;
+    background: linear-gradient(135deg, #0f766e, #0b3f3a);
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.register:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 12px 24px rgba(15, 118, 110, 0.25);
+}
+
+.right-panel p {
+    margin-top: 10px;
+    text-align: center;
+    color: var(--text-muted);
+}
+
+.right-panel p a {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.right-panel p a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 760px) {
+    .left-panel {
+        min-height: 220px;
+    }
+}

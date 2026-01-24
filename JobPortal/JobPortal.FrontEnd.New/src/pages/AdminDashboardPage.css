@@ -1,0 +1,43 @@
+.admin-dashboard {
+    padding: 120px 8vw 80px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.admin-hero {
+    background: linear-gradient(120deg, rgba(15, 118, 110, 0.85), rgba(11, 18, 32, 0.75)),
+        url('/images/admin1.jpg');
+    background-size: cover;
+    background-position: center;
+    border-radius: 24px;
+    padding: 32px;
+    color: var(--text-on-dark);
+}
+
+.admin-hero h1 {
+    font-family: var(--font-display);
+    margin: 10px 0;
+}
+
+.admin-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+}
+
+.admin-card {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 16px;
+    box-shadow: var(--shadow-soft);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.admin-card a {
+    text-decoration: none;
+    color: var(--primary);
+    font-weight: 600;
+}
