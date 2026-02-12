@@ -18,7 +18,7 @@ jobs:
       - name: Build and push backend image
         uses: docker/build-push-action@v6
         with:
-          context: JobPortal/JobPortal.BackEnd/JobPortal
+          context: JobPortal/JobPortal/JobPortal.BackEnd/JobPortal
           push: true
           tags: e20376/job-magnet-backend:latest
       - name: Build and push frontend image
