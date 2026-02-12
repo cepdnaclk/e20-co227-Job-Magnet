@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { authFetch } from '../utils/authFetch';
+import { apiUrl } from '../utils/apiBase';
 import './RegisterPage.css';
 
 /**
@@ -37,7 +38,7 @@ const EmployerRegisterPage = () => {
         }
         setIsSubmitting(true);
         try {
-            const response = await authFetch('http://localhost:8080/api/employers/registration', {
+            const response = await authFetch(apiUrl('/api/employers/registration'), {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { authFetch } from '../utils/authFetch';
+import { apiUrl } from '../utils/apiBase';
 import './LoginPage.css';
 
 /**
@@ -32,7 +33,7 @@ const LoginPage = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await authFetch('http://localhost:8080/api/login', {
+            const response = await authFetch(apiUrl('/api/login'), {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

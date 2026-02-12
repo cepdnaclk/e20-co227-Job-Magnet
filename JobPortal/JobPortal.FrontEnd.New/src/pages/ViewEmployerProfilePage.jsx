@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { authFetch } from '../utils/authFetch';
+import { apiUrl } from '../utils/apiBase';
 import './ViewEmployerProfilePage.css';
 
 const ViewEmployerProfilePage = () => {
@@ -14,7 +15,7 @@ const ViewEmployerProfilePage = () => {
             try {
                 setLoading(true);
                 setError('');
-                const response = await authFetch(`http://localhost:8080/api/employers/findbyid/${id}`);
+                const response = await authFetch(apiUrl(`/api/employers/findbyid/${id}`));
                 if (!response.ok) {
                     throw new Error('Failed to load employer profile');
                 }
@@ -85,7 +86,11 @@ const ViewEmployerProfilePage = () => {
             </section>
 
             <section className="profile-actions">
-                <Link to="/messages">Message</Link>
+                {profile?.email ? (
+                    <Link to={`/messages?recipient=${encodeURIComponent(profile.email)}`}>Message</Link>
+                ) : (
+                    <Link to="/messages">Message</Link>
+                )}
                 <Link to="/dashboard">Back to Dashboard</Link>
             </section>
         </div>

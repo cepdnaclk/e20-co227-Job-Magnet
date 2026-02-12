@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { authFetch } from '../utils/authFetch';
+import { apiUrl } from '../utils/apiBase';
 import './ViewSeekerProfilePage.css';
 
 const ViewSeekerProfilePage = () => {
@@ -14,7 +15,7 @@ const ViewSeekerProfilePage = () => {
             try {
                 setLoading(true);
                 setError('');
-                const response = await authFetch(`http://localhost:8080/api/jobseekers/searchbyid/${id}`);
+                const response = await authFetch(apiUrl(`/api/jobseekers/searchbyid/${id}`));
                 if (!response.ok) {
                     throw new Error('Failed to load seeker profile');
                 }
@@ -81,7 +82,11 @@ const ViewSeekerProfilePage = () => {
             </section>
 
             <section className="profile-actions">
-                <Link to="/messages">Message</Link>
+                {profile?.email ? (
+                    <Link to={`/messages?recipient=${encodeURIComponent(profile.email)}`}>Message</Link>
+                ) : (
+                    <Link to="/messages">Message</Link>
+                )}
                 <Link to="/dashboard">Back to Dashboard</Link>
             </section>
         </div>

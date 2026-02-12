@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { authFetch } from '../utils/authFetch';
+import { apiUrl } from '../utils/apiBase';
 import './Navbar.css';
 
 /**
@@ -23,7 +24,7 @@ const Navbar = () => {
             }
             try {
                 const response = await authFetch(
-                    `http://localhost:8080/api/messages/unread/${encodeURIComponent(user.email)}`
+                    apiUrl(`/api/messages/unread/${encodeURIComponent(user.email)}`)
                 );
                 if (!response.ok) {
                     return;
