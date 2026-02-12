@@ -1,11 +1,13 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { Link, useSearchParams } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { authFetch } from '../utils/authFetch';
+import { apiUrl } from '../utils/apiBase';
 import './MessagesPage.css';
 
 const MessagesPage = () => {
     const { user } = useAuth();
+    const [searchParams] = useSearchParams();
     const [unreadMessages, setUnreadMessages] = useState([]);
     const [profilesByEmail, setProfilesByEmail] = useState({});
     const [selectedSender, setSelectedSender] = useState(null);
@@ -17,11 +19,39 @@ const MessagesPage = () => {
 
     const userEmail = user?.email;
     const userType = user?.usertype;
+    const preferredRecipient = searchParams.get('recipient');
 
     const senderEmails = useMemo(() => {
         const unique = new Set(unreadMessages.map((message) => message.senderEmail));
         return Array.from(unique);
     }, [unreadMessages]);
+
+    const conversationEmails = useMemo(() => {
+        const unique = new Set(senderEmails);
+        if (preferredRecipient) {
+            unique.add(preferredRecipient);
+        }
+        return Array.from(unique);
+    }, [senderEmails, preferredRecipient]);
+
+    const inboxCards = useMemo(() => {
+        if (!preferredRecipient) {
+            return unreadMessages;
+        }
+        const hasRecipient = unreadMessages.some((message) => message.senderEmail === preferredRecipient);
+        if (hasRecipient) {
+            return unreadMessages;
+        }
+        return [
+            {
+                id: `direct-${preferredRecipient}`,
+                senderEmail: preferredRecipient,
+                content: 'Start a conversation',
+                isDirect: true
+            },
+            ...unreadMessages
+        ];
+    }, [preferredRecipient, unreadMessages]);
 
     useEffect(() => {
         let intervalId;
@@ -33,7 +63,9 @@ const MessagesPage = () => {
             try {
                 setLoading(true);
                 setError('');
-                const response = await authFetch(`http://localhost:8080/api/messages/unread/${encodeURIComponent(userEmail)}`);
+                const response = await authFetch(
+                    apiUrl(`/api/messages/unread/${encodeURIComponent(userEmail)}`)
+                );
                 if (!response.ok) {
                     throw new Error('Failed to load unread messages');
                 }
@@ -52,16 +84,16 @@ const MessagesPage = () => {
 
     useEffect(() => {
         const loadProfiles = async () => {
-            if (!senderEmails.length || !userType) {
+            if (!conversationEmails.length || !userType) {
                 return;
             }
             const endpointBase =
                 userType === 'employer'
-                    ? 'http://localhost:8080/api/jobseekers/profile?email='
-                    : 'http://localhost:8080/api/employers/profile?email=';
+                    ? apiUrl('/api/jobseekers/profile?email=')
+                    : apiUrl('/api/employers/profile?email=');
 
             const profileEntries = await Promise.all(
-                senderEmails.map(async (email) => {
+                conversationEmails.map(async (email) => {
                     try {
                         const response = await authFetch(`${endpointBase}${encodeURIComponent(email)}`);
                         if (!response.ok) {
@@ -79,16 +111,18 @@ const MessagesPage = () => {
         };
 
         loadProfiles();
-    }, [senderEmails, userType]);
+    }, [conversationEmails, userType]);
 
-    const handleOpenConversation = async (senderEmail) => {
+    const handleOpenConversation = useCallback(async (senderEmail) => {
         if (!userEmail) {
             return;
         }
         setSelectedSender(senderEmail);
         try {
             const response = await authFetch(
-                `http://localhost:8080/api/messages/conversation/${encodeURIComponent(userEmail)}/${encodeURIComponent(senderEmail)}`
+                apiUrl(
+                    `/api/messages/conversation/${encodeURIComponent(userEmail)}/${encodeURIComponent(senderEmail)}`
+                )
             );
             if (!response.ok) {
                 throw new Error('Failed to load conversation');
@@ -98,11 +132,18 @@ const MessagesPage = () => {
         } catch (err) {
             setError(err.message || 'Failed to load conversation');
         }
-    };
+    }, [userEmail]);
+
+    useEffect(() => {
+        if (!preferredRecipient || !userEmail) {
+            return;
+        }
+        handleOpenConversation(preferredRecipient);
+    }, [preferredRecipient, userEmail, handleOpenConversation]);
 
     const handleMarkAsRead = async (messageId) => {
         try {
-            await authFetch(`http://localhost:8080/api/messages/mark-as-read/${messageId}`, {
+            await authFetch(apiUrl(`/api/messages/mark-as-read/${messageId}`), {
                 method: 'POST'
             });
             setUnreadMessages((prev) => prev.filter((message) => message.id !== messageId));
@@ -127,7 +168,7 @@ const MessagesPage = () => {
         }
 
         try {
-            const response = await authFetch('http://localhost:8080/api/messages/messages', {
+            const response = await authFetch(apiUrl('/api/messages/messages'), {
                 method: 'POST',
                 body: formData
             });
@@ -174,8 +215,8 @@ const MessagesPage = () => {
                     <h2>Unread</h2>
                     {loading && <p>Loading messages...</p>}
                     {!loading && error && <p className="error-text">{error}</p>}
-                    {!loading && !unreadMessages.length && <p>No unread messages.</p>}
-                    {unreadMessages.map((message) => {
+                    {!loading && !inboxCards.length && <p>No unread messages.</p>}
+                    {inboxCards.map((message) => {
                         const profile = profilesByEmail[message.senderEmail];
                         const displayName =
                             userType === 'employer'
@@ -206,7 +247,11 @@ const MessagesPage = () => {
                                 )}
                                 <div className="message-actions">
                                     <button onClick={() => handleOpenConversation(message.senderEmail)}>Open</button>
-                                    <button className="ghost" onClick={() => handleMarkAsRead(message.id)}>Mark read</button>
+                                    {!message.isDirect && (
+                                        <button className="ghost" onClick={() => handleMarkAsRead(message.id)}>
+                                            Mark read
+                                        </button>
+                                    )}
                                 </div>
                             </div>
                         );
