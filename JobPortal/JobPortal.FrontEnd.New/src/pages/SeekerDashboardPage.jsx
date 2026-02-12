@@ -1,21 +1,27 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
 import { authFetch } from '../utils/authFetch';
+import { apiUrl } from '../utils/apiBase';
 import './SeekerDashboardPage.css';
 
 const SeekerDashboardPage = () => {
+    const { user } = useAuth();
     const [jobs, setJobs] = useState([]);
     const [query, setQuery] = useState('');
     const [searchOption, setSearchOption] = useState('type');
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
     const [companyCache, setCompanyCache] = useState({});
+    const [unreadMessages, setUnreadMessages] = useState([]);
+    const [messagesLoading, setMessagesLoading] = useState(true);
+    const [messagesError, setMessagesError] = useState('');
 
     const loadJobs = async () => {
         try {
             setLoading(true);
             setError('');
-            const response = await authFetch('http://localhost:8080/api/seekers/search-jobs/all');
+            const response = await authFetch(apiUrl('/api/seekers/search-jobs/all'));
             if (!response.ok) {
                 throw new Error('Failed to load jobs');
             }
@@ -33,12 +39,39 @@ const SeekerDashboardPage = () => {
     }, []);
 
     useEffect(() => {
+        const loadUnread = async () => {
+            if (!user?.email) {
+                setMessagesLoading(false);
+                return;
+            }
+            try {
+                setMessagesLoading(true);
+                setMessagesError('');
+                const response = await authFetch(
+                    apiUrl(`/api/messages/unread/${encodeURIComponent(user.email)}`)
+                );
+                if (!response.ok) {
+                    throw new Error('Failed to load messages');
+                }
+                const data = await response.json();
+                setUnreadMessages(Array.isArray(data) ? data : []);
+            } catch (err) {
+                setMessagesError(err.message || 'Failed to load messages');
+            } finally {
+                setMessagesLoading(false);
+            }
+        };
+
+        loadUnread();
+    }, [user]);
+
+    useEffect(() => {
         const fetchCompany = async (companyId) => {
             if (!companyId || companyCache[companyId]) {
                 return;
             }
             try {
-                const response = await authFetch(`http://localhost:8080/api/employers/findbyid/${companyId}`);
+                const response = await authFetch(apiUrl(`/api/employers/findbyid/${companyId}`));
                 if (!response.ok) {
                     return;
                 }
@@ -62,7 +95,9 @@ const SeekerDashboardPage = () => {
         try {
             setLoading(true);
             const response = await authFetch(
-                `http://localhost:8080/api/seekers/search-jobs/search?search_option=${encodeURIComponent(searchOption)}&query=${encodeURIComponent(trimmed)}`
+                apiUrl(
+                    `/api/seekers/search-jobs/search?search_option=${encodeURIComponent(searchOption)}&query=${encodeURIComponent(trimmed)}`
+                )
             );
             const data = await response.json();
             setJobs(Array.isArray(data) ? data : []);
@@ -80,10 +115,13 @@ const SeekerDashboardPage = () => {
             return {
                 ...job,
                 companyName: company.companyName || 'Unknown',
-                companyLogo: company.companyLogo || ''
+                companyLogo: company.companyLogo || '',
+                companyEmail: company.email || ''
             };
         });
     }, [jobs, companyCache]);
+
+    const previewMessages = useMemo(() => unreadMessages.slice(0, 3), [unreadMessages]);
 
     return (
         <div className="seeker-dashboard page-fade">
@@ -110,6 +148,33 @@ const SeekerDashboardPage = () => {
                 </form>
             </section>
 
+            <section className="dashboard-messages">
+                <div className="messages-header">
+                    <div>
+                        <p className="kicker">Messages</p>
+                        <h2>Recruiter replies</h2>
+                        <p>Stay on top of employer conversations.</p>
+                    </div>
+                    <Link to="/messages" className="messages-cta">Open inbox</Link>
+                </div>
+                <div className="messages-list">
+                    {messagesLoading && <p>Loading messages...</p>}
+                    {!messagesLoading && messagesError && <p className="error-text">{messagesError}</p>}
+                    {!messagesLoading && !previewMessages.length && !messagesError && (
+                        <p>No unread messages yet.</p>
+                    )}
+                    {previewMessages.map((message) => (
+                        <div className="message-preview-card" key={message.id}>
+                            <div>
+                                <h3>{message.senderEmail}</h3>
+                                <p>{message.content}</p>
+                            </div>
+                            <Link to={`/messages?recipient=${encodeURIComponent(message.senderEmail)}`}>Reply</Link>
+                        </div>
+                    ))}
+                </div>
+            </section>
+
             <section className="seeker-grid">
                 {loading && <p>Loading jobs...</p>}
                 {!loading && error && <p className="error-text">{error}</p>}
@@ -134,6 +199,9 @@ const SeekerDashboardPage = () => {
                         <div className="card-actions">
                             <Link to={`/profile/employer/${job.companyId}`}>Company</Link>
                             <a href={`/ViewJobProfile.html?jobId=${job.jobId}`}>Job</a>
+                            {job.companyEmail && (
+                                <Link to={`/messages?recipient=${encodeURIComponent(job.companyEmail)}`}>Message</Link>
+                            )}
                         </div>
                     </div>
                 ))}

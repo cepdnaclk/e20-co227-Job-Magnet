@@ -54,6 +54,58 @@
     gap: 20px;
 }
 
+.dashboard-messages {
+    background: #ffffff;
+    padding: 24px;
+    border-radius: 20px;
+    box-shadow: var(--shadow-soft);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.messages-header {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.messages-cta {
+    background: var(--primary);
+    color: #fff;
+    padding: 10px 18px;
+    border-radius: 999px;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.messages-list {
+    display: grid;
+    gap: 12px;
+}
+
+.message-preview-card {
+    background: rgba(15, 118, 110, 0.08);
+    border-radius: 16px;
+    padding: 14px 16px;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    align-items: center;
+}
+
+.message-preview-card h3 {
+    margin: 0 0 6px;
+}
+
+.message-preview-card a {
+    text-decoration: none;
+    color: var(--primary);
+    font-weight: 600;
+}
+
 .employer-card {
     background: #ffffff;
     padding: 18px;

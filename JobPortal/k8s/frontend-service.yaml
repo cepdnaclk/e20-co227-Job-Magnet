@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: job-magnet-frontend
+  namespace: job-magnet
+spec:
+  selector:
+    app: job-magnet-frontend
+  ports:
+    - port: 80
+      targetPort: 80

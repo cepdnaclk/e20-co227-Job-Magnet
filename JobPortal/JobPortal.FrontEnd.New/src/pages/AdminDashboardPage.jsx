@@ -1,4 +1,5 @@
 import React from 'react';
+import { backendUrl } from '../utils/apiBase';
 import './AdminDashboardPage.css';
 
 const AdminDashboardPage = () => {
@@ -16,17 +17,17 @@ const AdminDashboardPage = () => {
                 <div className="admin-card">
                     <h3>Job Listings</h3>
                     <p>Review posted jobs and remove outdated listings.</p>
-                    <a href="http://localhost:8080/AdminViewJobListings.html">View job listings</a>
+                    <a href={backendUrl('/AdminViewJobListings.html')}>View job listings</a>
                 </div>
                 <div className="admin-card">
                     <h3>Job Seekers</h3>
                     <p>Inspect seeker accounts and keep data accurate.</p>
-                    <a href="http://localhost:8080/AdminViewJobSeekers.html">View job seekers</a>
+                    <a href={backendUrl('/AdminViewJobSeekers.html')}>View job seekers</a>
                 </div>
                 <div className="admin-card">
                     <h3>Job Employers</h3>
                     <p>Monitor employer accounts and approvals.</p>
-                    <a href="http://localhost:8080/AdminViewJobEmployers.html">View employers</a>
+                    <a href={backendUrl('/AdminViewJobEmployers.html')}>View employers</a>
                 </div>
             </section>
         </div>
