@@ -1,9 +1,11 @@
 name: Backend CI
 
 on:
-  push:
-    branches: ["main"]
   pull_request:
+    branches: ["main"]
+    paths:
+      - "JobPortal/JobPortal/JobPortal.BackEnd/**"
+      - ".github/workflows/backend-ci.yml"
 
 jobs:
   build:
@@ -15,6 +17,6 @@ jobs:
           distribution: "temurin"
           java-version: "17"
           cache: "maven"
-      - name: Build
+      - name: Build backend
         working-directory: JobPortal/JobPortal/JobPortal.BackEnd/JobPortal
         run: mvn -B -DskipTests package
