@@ -1,0 +1,26 @@
+name: Frontend CI
+
+on:
+  pull_request:
+    branches: ["main"]
+    paths:
+      - "JobPortal.FrontEnd.New/**"
+      - ".github/workflows/frontend-ci.yml"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+          cache-dependency-path: JobPortal.FrontEnd.New/package-lock.json
+      - name: Install dependencies
+        working-directory: JobPortal.FrontEnd.New
+        run: npm ci
+      - name: Build frontend
+        working-directory: JobPortal.FrontEnd.New
+        run: npm run build
+
