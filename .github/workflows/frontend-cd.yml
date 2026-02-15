@@ -1,12 +1,15 @@
-name: Deploy
+name: Frontend CD
 
 on:
-  push:
-    branches: ["main"]
+  pull_request:
+    branches: ["Deployment-Branch"]
+    paths:
+      - "JobPortal/JobPortal.FrontEnd.New/**"
+      - ".github/workflows/frontend-cd.yml"
   workflow_dispatch:
 
 jobs:
-  build-and-push:
+  deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -15,17 +18,12 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - name: Build and push backend image
-        uses: docker/build-push-action@v6
-        with:
-          context: JobPortal/JobPortal/JobPortal.BackEnd/JobPortal
-          push: true
-          tags: e20376/job-magnet-backend:latest
       - name: Build and push frontend image
         uses: docker/build-push-action@v6
         with:
-          context: JobPortal.FrontEnd.New
+          context: JobPortal/JobPortal.FrontEnd.New
           build-args: |
             VITE_API_BASE=/api
           push: true
-          tags: e20376/job-magnet-frontend:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/job-magnet-frontend:latest
+
