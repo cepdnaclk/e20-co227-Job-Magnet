@@ -1,0 +1,29 @@
+name: Frontend CD
+
+on:
+  pull_request:
+    branches: ["Deployment-Branch"]
+    paths:
+      - "JobPortal/JobPortal.FrontEnd.New/**"
+      - ".github/workflows/frontend-cd.yml"
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Build and push frontend image
+        uses: docker/build-push-action@v6
+        with:
+          context: JobPortal/JobPortal.FrontEnd.New
+          build-args: |
+            VITE_API_BASE=/api
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/job-magnet-frontend:latest
+
